@@ -1,3 +1,9 @@
+> **Note**
+> This Branch is maintained currently by Digitas Pixelpark and includes multiple changes and fixes that has been also be created as Pull Requests.
+
+> **Warning**
+> The maintaine of this branch will be dropped as soon as all fixes has been merged to the wazuh upstream!
+
 # Wazuh Puppet module
 
 [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://wazuh.com/community/join-us-on-slack/)
