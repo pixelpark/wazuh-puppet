@@ -61,8 +61,10 @@ extra_gemfiles.each do |gemfile|
   end
 end
 
-gem "test-kitchen"
-gem "kitchen-puppet"
-gem "kitchen-vagrant"
-gem 'kitchen-docker', '~> 2.3'
+group :kitchen do
+  gem "test-kitchen"
+  gem "kitchen-puppet"
+  gem "kitchen-vagrant"
+  gem 'kitchen-docker', '~> 2.3'
+end
 # vim: syntax=ruby

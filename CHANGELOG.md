@@ -1,105 +1,445 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Wazuh Puppet v4.3.7
+## Generated with
 
-### Added
+```
+cd $(mktemp -d)
+bundle config set --local path vendor/bundle
+bundle init
+echo "group :changelog do
+  gem 'async', '~> 1.29'
+  gem 'faraday', '~> 1.0', require: false
+  gem 'github_changelog_generator'
+end" >> Gemfile
+bundle install
+bundle exec github_changelog_generator --output '' --user wazuh --project wazuh-puppet --token $TOKEN --since-tag 'v4.3.0' --include-tags-regex '^(v4.2.5|v4\.3\..*)$'
+```
 
-- Support to 4.3.7 Wazuh release.
+## [Unreleased](https://github.com/wazuh/wazuh-puppet/tree/HEAD)
 
-## Wazuh Puppet v4.3.6
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.7...HEAD)
 
-### Added
+**Closed issues:**
 
-- Support to 4.3.6 Wazuh release.
+- Wazuh Filebeat module not extracted when archive is present in tmp [\#544](https://github.com/wazuh/wazuh-puppet/issues/544)
+- Missing template for Wazuh indexer configuration [\#527](https://github.com/wazuh/wazuh-puppet/issues/527)
+- Update the `api.yaml` configuration file with the new `upload_configuration` section and `limits` option [\#520](https://github.com/wazuh/wazuh-puppet/issues/520)
 
-## Wazuh Puppet v4.3.5
+## [v4.3.7](https://github.com/wazuh/wazuh-puppet/tree/v4.3.7) (2022-08-17)
 
-### Added
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.6...v4.3.7)
 
-- Support to 4.3.5 Wazuh release.
+**Closed issues:**
 
-## Wazuh Puppet v4.3.4
+- Filebeat parameter to enable archives [\#548](https://github.com/wazuh/wazuh-puppet/issues/548)
+- JVM memory option doesn't modify the JVM options [\#546](https://github.com/wazuh/wazuh-puppet/issues/546)
+- Change permission for filebeat.yml [\#540](https://github.com/wazuh/wazuh-puppet/issues/540)
+- Wazuh keeps trying to install new certificates [\#535](https://github.com/wazuh/wazuh-puppet/issues/535)
+- Wazuh manager parameters for logall and logall\_json options [\#532](https://github.com/wazuh/wazuh-puppet/issues/532)
+- Wazuh repo management missing in Wazuh dashboard [\#528](https://github.com/wazuh/wazuh-puppet/issues/528)
+- Review and fix for the exec resource declarations in wazuh::indexer, wazuh::dashboard and wazuh::filebeat\_oss [\#512](https://github.com/wazuh/wazuh-puppet/issues/512)
 
-### Added
+## [v4.3.6](https://github.com/wazuh/wazuh-puppet/tree/v4.3.6) (2022-07-19)
 
-- Support to 4.3.4 Wazuh release.
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.5...v4.3.6)
 
-## Wazuh Puppet v4.3.3
+**Merged pull requests:**
 
-### Added
+- Bump 4.3 to 4.3.6 [\#524](https://github.com/wazuh/wazuh-puppet/pull/524) ([vcerenu](https://github.com/vcerenu))
+- Add fix to avoid GLIBC crash [\#521](https://github.com/wazuh/wazuh-puppet/pull/521) ([fcaffieri](https://github.com/fcaffieri))
+- Disable filebeat metrics [\#517](https://github.com/wazuh/wazuh-puppet/pull/517) ([fcaffieri](https://github.com/fcaffieri))
 
-- Support to 4.3.3 Wazuh release.
+## [v4.3.5](https://github.com/wazuh/wazuh-puppet/tree/v4.3.5) (2022-06-24)
 
-## Wazuh Puppet v4.3.2
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.4...v4.3.5)
 
-### Added
+**Merged pull requests:**
 
-- Support to 4.3.2 Wazuh release.
+- Bump 4.3 to 4.3.5 [\#514](https://github.com/wazuh/wazuh-puppet/pull/514) ([vcerenu](https://github.com/vcerenu))
+- Support rhel8 \(agent only\) [\#509](https://github.com/wazuh/wazuh-puppet/pull/509) ([kibahop](https://github.com/kibahop))
+- Use provided value for wazuh\_enrollment\_auth\_pass [\#494](https://github.com/wazuh/wazuh-puppet/pull/494) ([genebean](https://github.com/genebean))
 
-## Wazuh Puppet v4.3.1
+## [v4.3.4](https://github.com/wazuh/wazuh-puppet/tree/v4.3.4) (2022-06-08)
 
-### Added
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.3...v4.3.4)
 
-- Support to 4.3.1 Wazuh release.
+## [v4.3.3](https://github.com/wazuh/wazuh-puppet/tree/v4.3.3) (2022-06-02)
 
-## Wazuh Puppet v4.3.0
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.2...v4.3.3)
 
-### Added
+**Merged pull requests:**
 
-- Support to 4.3.0 Wazuh release.
+- Bump 4.3.3 into 4.3 [\#504](https://github.com/wazuh/wazuh-puppet/pull/504) ([vcerenu](https://github.com/vcerenu))
+- Bump 4.3.3 to 4.3 Branch [\#503](https://github.com/wazuh/wazuh-puppet/pull/503) ([vcerenu](https://github.com/vcerenu))
 
-## Wazuh Puppet v4.2.7
+## [v4.3.2](https://github.com/wazuh/wazuh-puppet/tree/v4.3.2) (2022-05-30)
 
-### Added
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.1...v4.3.2)
 
-- Support to 4.2.7 Wazuh release.
+**Merged pull requests:**
 
-## Wazuh Puppet v4.2.6
+- Bump 4.3.2 to 4.3 Branch [\#500](https://github.com/wazuh/wazuh-puppet/pull/500) ([vcerenu](https://github.com/vcerenu))
+- Update filebeat module version [\#499](https://github.com/wazuh/wazuh-puppet/pull/499) ([DFolchA](https://github.com/DFolchA))
+- Use HTTPS for Windows Download [\#498](https://github.com/wazuh/wazuh-puppet/pull/498) ([pheleven](https://github.com/pheleven))
 
-### Added
+## [v4.3.1](https://github.com/wazuh/wazuh-puppet/tree/v4.3.1) (2022-05-16)
 
-- Support to 4.2.6 Wazuh release.
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.3.0...v4.3.1)
 
-## Wazuh Puppet v4.2.5
+**Closed issues:**
 
-### Added
+- Release v4.3.0 Puppet [\#434](https://github.com/wazuh/wazuh-puppet/issues/434)
+- Pre-Release v4.3.0 Puppet [\#433](https://github.com/wazuh/wazuh-puppet/issues/433)
 
-- Support to 4.2.5 Wazuh release.
+**Merged pull requests:**
 
-## Wazuh Puppet v4.2.4
+- Wazuh Puppet 4.3.1 [\#492](https://github.com/wazuh/wazuh-puppet/pull/492) ([vcerenu](https://github.com/vcerenu))
 
-### Added
+## [v4.3.0](https://github.com/wazuh/wazuh-puppet/tree/v4.3.0) (2022-05-06)
 
-- Support to 4.2.4 Wazuh release.
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.6...v4.3.0)
 
-## Wazuh Puppet v4.2.3
+**Closed issues:**
 
-### Added
+- `config.yml` must be adapted to the new format [\#475](https://github.com/wazuh/wazuh-puppet/issues/475)
+- Windows variable redefinition error [\#473](https://github.com/wazuh/wazuh-puppet/issues/473)
+- After deploying the Wazuh agent for Windows it is not automatically started [\#470](https://github.com/wazuh/wazuh-puppet/issues/470)
+- Some variables in the `params_agent.pp` cause errors when deploying a Wazuh agent for Windows [\#469](https://github.com/wazuh/wazuh-puppet/issues/469)
+- The `ossec_service_provider` variable specified in the documentation are not working for the Wazuh manager and agent deployment [\#468](https://github.com/wazuh/wazuh-puppet/issues/468)
+- Misc variables have no effect, have errors, and don't work as expected \(rootcheck, api, cis\_cat, osquery, syslog\) [\#467](https://github.com/wazuh/wazuh-puppet/issues/467)
+- SCA variables have no effects and errors.  [\#466](https://github.com/wazuh/wazuh-puppet/issues/466)
+- Vulnerability detector variables have no effects, have errors, and don't work as expected,  [\#465](https://github.com/wazuh/wazuh-puppet/issues/465)
+- Syscheck variables with no effect, errors and dependencies not found for installation. [\#464](https://github.com/wazuh/wazuh-puppet/issues/464)
+- The Wazuh puppet agent module can't be used on Ubuntu 20.10 distribution [\#460](https://github.com/wazuh/wazuh-puppet/issues/460)
+- Some settings aren't working for Wazuh manager/agent class \(localfile, remote, email and enrollment sections\) [\#459](https://github.com/wazuh/wazuh-puppet/issues/459)
+- The indexer/dashboard certs folder should have 500 permissions and certificates 400 [\#458](https://github.com/wazuh/wazuh-puppet/issues/458)
+- Clean wazuh-puppet repository [\#457](https://github.com/wazuh/wazuh-puppet/issues/457)
+- Release v4.2.6 Puppet [\#455](https://github.com/wazuh/wazuh-puppet/issues/455)
+- Pre-Release v4.2.6 Puppet [\#454](https://github.com/wazuh/wazuh-puppet/issues/454)
+- Update the `api.yaml` configuration file with the new `format` API configuration parameter [\#451](https://github.com/wazuh/wazuh-puppet/issues/451)
+- AlmaLinux is not yet supported [\#442](https://github.com/wazuh/wazuh-puppet/issues/442)
 
-- Support to 4.2.3 Wazuh release.
+**Merged pull requests:**
 
-## Wazuh Puppet v4.2.2
+- Split package version for OS family [\#490](https://github.com/wazuh/wazuh-puppet/pull/490) ([vcerenu](https://github.com/vcerenu))
+- VD providers added [\#487](https://github.com/wazuh/wazuh-puppet/pull/487) ([teddytpc1](https://github.com/teddytpc1))
+- SCA policies tag fixed [\#486](https://github.com/wazuh/wazuh-puppet/pull/486) ([teddytpc1](https://github.com/teddytpc1))
+- VD Redhat OS logic updated [\#485](https://github.com/wazuh/wazuh-puppet/pull/485) ([teddytpc1](https://github.com/teddytpc1))
+- VD min\_full\_scan\_interval variable added [\#484](https://github.com/wazuh/wazuh-puppet/pull/484) ([teddytpc1](https://github.com/teddytpc1))
+- Add support to Ubuntu Groovy Gorilla \(20.10\) [\#483](https://github.com/wazuh/wazuh-puppet/pull/483) ([teddytpc1](https://github.com/teddytpc1))
+- Syscheck variables included in \_syscheck.erb [\#482](https://github.com/wazuh/wazuh-puppet/pull/482) ([teddytpc1](https://github.com/teddytpc1))
+- Audit package name logic updated [\#481](https://github.com/wazuh/wazuh-puppet/pull/481) ([teddytpc1](https://github.com/teddytpc1))
+- Added Alma Linux deploy support [\#480](https://github.com/wazuh/wazuh-puppet/pull/480) ([okynos](https://github.com/okynos))
+- Queue\_size logic update [\#478](https://github.com/wazuh/wazuh-puppet/pull/478) ([teddytpc1](https://github.com/teddytpc1))
+- sca\_amazon variables renamed [\#477](https://github.com/wazuh/wazuh-puppet/pull/477) ([teddytpc1](https://github.com/teddytpc1))
+- Updated config.yml template [\#476](https://github.com/wazuh/wazuh-puppet/pull/476) ([c-bordon](https://github.com/c-bordon))
+- Parameter correction [\#474](https://github.com/wazuh/wazuh-puppet/pull/474) ([vcerenu](https://github.com/vcerenu))
+- SCA variables corrected. [\#471](https://github.com/wazuh/wazuh-puppet/pull/471) ([teddytpc1](https://github.com/teddytpc1))
+- Remove Files From Elastic Stack and Opendistro Stack [\#462](https://github.com/wazuh/wazuh-puppet/pull/462) ([c-bordon](https://github.com/c-bordon))
+- Changed name from indexerSecurityInitializer.sh to indexer-security-init.sh [\#453](https://github.com/wazuh/wazuh-puppet/pull/453) ([c-bordon](https://github.com/c-bordon))
+- Adapt the Puppet deployment to use the new Wazuh indexer default ports [\#449](https://github.com/wazuh/wazuh-puppet/pull/449) ([vcerenu](https://github.com/vcerenu))
+- Included manifests to deploy Indexer and Dashboard packages [\#444](https://github.com/wazuh/wazuh-puppet/pull/444) ([okynos](https://github.com/okynos))
+- API changes applied [\#437](https://github.com/wazuh/wazuh-puppet/pull/437) ([teddytpc1](https://github.com/teddytpc1))
+- Add log4j workaround [\#435](https://github.com/wazuh/wazuh-puppet/pull/435) ([vcerenu](https://github.com/vcerenu))
+- Change ossecr user [\#432](https://github.com/wazuh/wazuh-puppet/pull/432) ([vcerenu](https://github.com/vcerenu))
+- Change ossec group in manager and agent install [\#430](https://github.com/wazuh/wazuh-puppet/pull/430) ([vcerenu](https://github.com/vcerenu))
+- Api configuratyion options update [\#428](https://github.com/wazuh/wazuh-puppet/pull/428) ([vcerenu](https://github.com/vcerenu))
+- Update Auth Options [\#427](https://github.com/wazuh/wazuh-puppet/pull/427) ([vcerenu](https://github.com/vcerenu))
+- Merge 4.2.5 into master  [\#426](https://github.com/wazuh/wazuh-puppet/pull/426) ([vcerenu](https://github.com/vcerenu))
+- Removed user Administrator for windows deployments to Master [\#419](https://github.com/wazuh/wazuh-puppet/pull/419) ([c-bordon](https://github.com/c-bordon))
+- Changed agent parameters definition [\#418](https://github.com/wazuh/wazuh-puppet/pull/418) ([okynos](https://github.com/okynos))
+- Merge 4.2 into master [\#412](https://github.com/wazuh/wazuh-puppet/pull/412) ([vcerenu](https://github.com/vcerenu))
+- Merge 4.2 in master [\#406](https://github.com/wazuh/wazuh-puppet/pull/406) ([vcerenu](https://github.com/vcerenu))
+- Merge 4.2 in master [\#398](https://github.com/wazuh/wazuh-puppet/pull/398) ([vcerenu](https://github.com/vcerenu))
+- Added Debian Bullseye support. [\#376](https://github.com/wazuh/wazuh-puppet/pull/376) ([cheasles](https://github.com/cheasles))
+- Implemented the ability to specify an agent address when registering [\#375](https://github.com/wazuh/wazuh-puppet/pull/375) ([cheasles](https://github.com/cheasles))
+- add option to disable client buffer [\#372](https://github.com/wazuh/wazuh-puppet/pull/372) ([rabidsloth](https://github.com/rabidsloth))
+- 365 update readme and bump version up to 4.3.0 [\#368](https://github.com/wazuh/wazuh-puppet/pull/368) ([jcruzlp](https://github.com/jcruzlp))
+- Bump powershell dependency requirement [\#364](https://github.com/wazuh/wazuh-puppet/pull/364) ([mike406](https://github.com/mike406))
+- Add new line before and after email\_alerts block [\#358](https://github.com/wazuh/wazuh-puppet/pull/358) ([ajurjevi](https://github.com/ajurjevi))
+- Beautify command template [\#357](https://github.com/wazuh/wazuh-puppet/pull/357) ([ajurjevi](https://github.com/ajurjevi))
+- Beautify localfile template [\#356](https://github.com/wazuh/wazuh-puppet/pull/356) ([ajurjevi](https://github.com/ajurjevi))
+- Beautify active response template [\#355](https://github.com/wazuh/wazuh-puppet/pull/355) ([ajurjevi](https://github.com/ajurjevi))
+- Add correct target\_arg in activeresponse manifest [\#354](https://github.com/wazuh/wazuh-puppet/pull/354) ([ajurjevi](https://github.com/ajurjevi))
+- Add docker-listener wodle section [\#344](https://github.com/wazuh/wazuh-puppet/pull/344) ([lemrouch](https://github.com/lemrouch))
+- Add a parameter ossec\_rootcheck\_ignore\_sregex\_list [\#329](https://github.com/wazuh/wazuh-puppet/pull/329) ([Hexta](https://github.com/Hexta))
 
-### Added
+## [v4.2.7](https://github.com/wazuh/wazuh-puppet/tree/v4.2.7) (2022-05-30)
 
-- Support to 4.2.2 Wazuh release.
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.6...v4.2.7)
 
-### Fixed
+**Closed issues:**
 
-- Fixed a bug in the agent.pp manifest that prevented the Wazuh Agent from upgrading in Windows ([#374](https://github.com/wazuh/wazuh-puppet/issues/374))
+- `config.yml` must be adapted to the new format [\#475](https://github.com/wazuh/wazuh-puppet/issues/475)
+- Windows variable redefinition error [\#473](https://github.com/wazuh/wazuh-puppet/issues/473)
+- After deploying the Wazuh agent for Windows it is not automatically started [\#470](https://github.com/wazuh/wazuh-puppet/issues/470)
+- Some variables in the `params_agent.pp` cause errors when deploying a Wazuh agent for Windows [\#469](https://github.com/wazuh/wazuh-puppet/issues/469)
+- The `ossec_service_provider` variable specified in the documentation are not working for the Wazuh manager and agent deployment [\#468](https://github.com/wazuh/wazuh-puppet/issues/468)
+- Misc variables have no effect, have errors, and don't work as expected \(rootcheck, api, cis\_cat, osquery, syslog\) [\#467](https://github.com/wazuh/wazuh-puppet/issues/467)
+- SCA variables have no effects and errors.  [\#466](https://github.com/wazuh/wazuh-puppet/issues/466)
+- Vulnerability detector variables have no effects, have errors, and don't work as expected,  [\#465](https://github.com/wazuh/wazuh-puppet/issues/465)
+- Syscheck variables with no effect, errors and dependencies not found for installation. [\#464](https://github.com/wazuh/wazuh-puppet/issues/464)
+- The Wazuh puppet agent module can't be used on Ubuntu 20.10 distribution [\#460](https://github.com/wazuh/wazuh-puppet/issues/460)
+- Some settings aren't working for Wazuh manager/agent class \(localfile, remote, email and enrollment sections\) [\#459](https://github.com/wazuh/wazuh-puppet/issues/459)
+- The indexer/dashboard certs folder should have 500 permissions and certificates 400 [\#458](https://github.com/wazuh/wazuh-puppet/issues/458)
+- Clean wazuh-puppet repository [\#457](https://github.com/wazuh/wazuh-puppet/issues/457)
+- Release v4.2.6 Puppet [\#455](https://github.com/wazuh/wazuh-puppet/issues/455)
+- Pre-Release v4.2.6 Puppet [\#454](https://github.com/wazuh/wazuh-puppet/issues/454)
+- Update the `api.yaml` configuration file with the new `format` API configuration parameter [\#451](https://github.com/wazuh/wazuh-puppet/issues/451)
+- AlmaLinux is not yet supported [\#442](https://github.com/wazuh/wazuh-puppet/issues/442)
+- Release v4.3.0 Puppet [\#434](https://github.com/wazuh/wazuh-puppet/issues/434)
+- Pre-Release v4.3.0 Puppet [\#433](https://github.com/wazuh/wazuh-puppet/issues/433)
 
-## Wazuh Puppet v4.2.1
+## [v4.2.6](https://github.com/wazuh/wazuh-puppet/tree/v4.2.6) (2022-03-28)
 
-### Added
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.5...v4.2.6)
 
-- Support to 4.2.1 Wazuh release.
+**Closed issues:**
 
-## Wazuh Puppet v4.2.0
+- indexerSecurityInitializer.sh tool name must be changed by indexer-security-init.sh [\#452](https://github.com/wazuh/wazuh-puppet/issues/452)
+- Adapt the Puppet deployment to use the new Wazuh dashboard configuration file name. [\#448](https://github.com/wazuh/wazuh-puppet/issues/448)
+- Adapt the Puppet deployment to use the new Wazuh indexer default ports. [\#447](https://github.com/wazuh/wazuh-puppet/issues/447)
+- Pupppet agent auth pass [\#440](https://github.com/wazuh/wazuh-puppet/issues/440)
+- Release Wazuh Indexer into puppet module [\#439](https://github.com/wazuh/wazuh-puppet/issues/439)
+- Review API configuration parameters to match the new standard [\#436](https://github.com/wazuh/wazuh-puppet/issues/436)
+- Error in Wazuh Manager and Agent 4.3.0 pre-release installation [\#429](https://github.com/wazuh/wazuh-puppet/issues/429)
+- Release v4.2.5 Puppet [\#423](https://github.com/wazuh/wazuh-puppet/issues/423)
+- Pre-Release v4.2.5 Puppet [\#422](https://github.com/wazuh/wazuh-puppet/issues/422)
+- Wazuh agent \(tagged version 4.2.3\) forces Windows clients to run a corrective action on every Puppet run [\#421](https://github.com/wazuh/wazuh-puppet/issues/421)
+- Manage repos for Elastic/Kibana/Filebeat [\#416](https://github.com/wazuh/wazuh-puppet/issues/416)
+- Update references to deprecated authd options and consider the new ones. [\#386](https://github.com/wazuh/wazuh-puppet/issues/386)
+- agent.pp floods puppetserver.log with warnings [\#371](https://github.com/wazuh/wazuh-puppet/issues/371)
+- Windows computers with renamed "Administrator" account fail to install agent [\#362](https://github.com/wazuh/wazuh-puppet/issues/362)
+- Rename wazuh-puppet users and groups according to the new Wazuh naming standard [\#352](https://github.com/wazuh/wazuh-puppet/issues/352)
 
-### Added
+**Merged pull requests:**
 
-- Support to 4.2.0 Wazuh release.
+- Bump 4.2.6 to 4.2 branch [\#456](https://github.com/wazuh/wazuh-puppet/pull/456) ([c-bordon](https://github.com/c-bordon))
+- Removed user Administrator for windows deployments to 4.2 [\#420](https://github.com/wazuh/wazuh-puppet/pull/420) ([c-bordon](https://github.com/c-bordon))
+
+## [v4.2.5](https://github.com/wazuh/wazuh-puppet/tree/v4.2.5) (2021-11-15)
+
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.4...v4.2.5)
+
+**Closed issues:**
+
+- Release v4.2.4 Puppet [\#408](https://github.com/wazuh/wazuh-puppet/issues/408)
+- Pre-Release v4.2.4 [\#407](https://github.com/wazuh/wazuh-puppet/issues/407)
+- apt::key definition causes issues w/ proxy [\#395](https://github.com/wazuh/wazuh-puppet/issues/395)
+- filebeat class does not support authentication [\#378](https://github.com/wazuh/wazuh-puppet/issues/378)
+- Module not upgrading agents on Windows [\#374](https://github.com/wazuh/wazuh-puppet/issues/374)
+- Unable to register agent with multiple HA cluster nodes  [\#260](https://github.com/wazuh/wazuh-puppet/issues/260)
+
+**Merged pull requests:**
+
+- Release v4.2.5 [\#424](https://github.com/wazuh/wazuh-puppet/pull/424) ([vcerenu](https://github.com/vcerenu))
+
+## [v4.2.4](https://github.com/wazuh/wazuh-puppet/tree/v4.2.4) (2021-10-20)
+
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.3...v4.2.4)
+
+**Closed issues:**
+
+- Release v4.2.3 Puppet [\#403](https://github.com/wazuh/wazuh-puppet/issues/403)
+- Pre-Release v4.2.3 [\#402](https://github.com/wazuh/wazuh-puppet/issues/402)
+
+**Merged pull requests:**
+
+- Release v4.2.4 [\#411](https://github.com/wazuh/wazuh-puppet/pull/411) ([vcerenu](https://github.com/vcerenu))
+- Release v4.2.4 [\#409](https://github.com/wazuh/wazuh-puppet/pull/409) ([vcerenu](https://github.com/vcerenu))
+
+## [v4.2.3](https://github.com/wazuh/wazuh-puppet/tree/v4.2.3) (2021-10-08)
+
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.2...v4.2.3)
+
+**Closed issues:**
+
+- Add Debian 11 compatibilty [\#400](https://github.com/wazuh/wazuh-puppet/issues/400)
+- 4.2.2 release requires an update to the wazuh\_api\_yml template. manifest/manager.pp logic [\#396](https://github.com/wazuh/wazuh-puppet/issues/396)
+- Release v4.2.2 Puppet [\#392](https://github.com/wazuh/wazuh-puppet/issues/392)
+- \[wazuh-puppet\] Update v4.1.5 with Opendistro 1.13.2 [\#370](https://github.com/wazuh/wazuh-puppet/issues/370)
+
+**Merged pull requests:**
+
+- Release v4.2.3 [\#404](https://github.com/wazuh/wazuh-puppet/pull/404) ([vcerenu](https://github.com/vcerenu))
+- Adding support for Debian 11 \(Bullseye\) [\#401](https://github.com/wazuh/wazuh-puppet/pull/401) ([c-bordon](https://github.com/c-bordon))
+- 4.2.2 release requires an update to the wazuh api yml template. manifest/manager.pp logic [\#397](https://github.com/wazuh/wazuh-puppet/pull/397) ([jakefeasey](https://github.com/jakefeasey))
+
+## [v4.2.2](https://github.com/wazuh/wazuh-puppet/tree/v4.2.2) (2021-09-22)
+
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.1...v4.2.2)
+
+**Closed issues:**
+
+- Pre-Release v4.2.2 [\#391](https://github.com/wazuh/wazuh-puppet/issues/391)
+- Merge latest changes into 4.2 wazuh-puppet branch [\#389](https://github.com/wazuh/wazuh-puppet/issues/389)
+- Release 4.2.1 puppet [\#388](https://github.com/wazuh/wazuh-puppet/issues/388)
+- \[API\] Remove behind\_proxy\_server API option [\#379](https://github.com/wazuh/wazuh-puppet/issues/379)
+
+**Merged pull requests:**
+
+- 374 issue upgrade agent windows [\#394](https://github.com/wazuh/wazuh-puppet/pull/394) ([vcerenu](https://github.com/vcerenu))
+- Prepare the 4.2.2 release [\#393](https://github.com/wazuh/wazuh-puppet/pull/393) ([vcerenu](https://github.com/vcerenu))
+
+## [v4.2.1](https://github.com/wazuh/wazuh-puppet/tree/v4.2.1) (2021-09-09)
+
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.2.0...v4.2.1)
+
+**Closed issues:**
+
+- Upload Wazuh Puppet module to forge [\#385](https://github.com/wazuh/wazuh-puppet/issues/385)
+- Create v4.2.0 release into wazuh-puppet github release page [\#384](https://github.com/wazuh/wazuh-puppet/issues/384)
+- Create v4.2.0 wazuh-puppet tag [\#383](https://github.com/wazuh/wazuh-puppet/issues/383)
+- Test 4.2 puppet branch deployment [\#382](https://github.com/wazuh/wazuh-puppet/issues/382)
+- Merge latest changes into 4.2 wazuh-puppet branch [\#381](https://github.com/wazuh/wazuh-puppet/issues/381)
+- Release 4.2.0 puppet [\#380](https://github.com/wazuh/wazuh-puppet/issues/380)
+
+**Merged pull requests:**
+
+- Update 4.2 branch to 4.2.1 [\#390](https://github.com/wazuh/wazuh-puppet/pull/390) ([okynos](https://github.com/okynos))
+
+## [v4.2.0](https://github.com/wazuh/wazuh-puppet/tree/v4.2.0) (2021-09-09)
+
+[Full Changelog](https://github.com/wazuh/wazuh-puppet/compare/v4.1.5...v4.2.0)
+
+**Closed issues:**
+
+- No option to disable client buffer [\#373](https://github.com/wazuh/wazuh-puppet/issues/373)
+- Wazuh v4.1.5 support [\#363](https://github.com/wazuh/wazuh-puppet/issues/363)
+
+**Merged pull requests:**
+
+- Update 4.2 branch with puppet last changes [\#387](https://github.com/wazuh/wazuh-puppet/pull/387) ([okynos](https://github.com/okynos))
+- Bump to 4.2.0 [\#369](https://github.com/wazuh/wazuh-puppet/pull/369) ([jcruzlp](https://github.com/jcruzlp))
+- update target name in concat for manager\_ossec.conf [\#341](https://github.com/wazuh/wazuh-puppet/pull/341) ([Zenidd](https://github.com/Zenidd))
+- Release 4.0.4 [\#338](https://github.com/wazuh/wazuh-puppet/pull/338) ([neonmei](https://github.com/neonmei))
+- Fix stdlib deprecation warnings  [\#334](https://github.com/wazuh/wazuh-puppet/pull/334) ([Zenidd](https://github.com/Zenidd))
+- Fix stdlib deprecation warnings [\#333](https://github.com/wazuh/wazuh-puppet/pull/333) ([Hexta](https://github.com/Hexta))
+- Fix active-response agent vars [\#332](https://github.com/wazuh/wazuh-puppet/pull/332) ([Zenidd](https://github.com/Zenidd))
+- Hexta fix puppet warnings [\#331](https://github.com/wazuh/wazuh-puppet/pull/331) ([Zenidd](https://github.com/Zenidd))
+- Fix reports settings [\#328](https://github.com/wazuh/wazuh-puppet/pull/328) ([Zenidd](https://github.com/Zenidd))
+- Integrations: Use manager ossec conf as render target. [\#327](https://github.com/wazuh/wazuh-puppet/pull/327) ([Zenidd](https://github.com/Zenidd))
+- add support for Ubuntu Focal Fossa \(20.04\)  [\#321](https://github.com/wazuh/wazuh-puppet/pull/321) ([neonmei](https://github.com/neonmei))
+- Github Actions: enable PDK validation tests in workflow [\#320](https://github.com/wazuh/wazuh-puppet/pull/320) ([neonmei](https://github.com/neonmei))
+- pdk validate improvements [\#319](https://github.com/wazuh/wazuh-puppet/pull/319) ([neonmei](https://github.com/neonmei))
+- manifests/kibana: add support to point to elastic cluster [\#317](https://github.com/wazuh/wazuh-puppet/pull/317) ([neonmei](https://github.com/neonmei))
+- Improve kibana manifest idempotency [\#315](https://github.com/wazuh/wazuh-puppet/pull/315) ([neonmei](https://github.com/neonmei))
+- Clean up linting warnings [\#314](https://github.com/wazuh/wazuh-puppet/pull/314) ([Zenidd](https://github.com/Zenidd))
+- Improve idempotency for elasticsearch [\#313](https://github.com/wazuh/wazuh-puppet/pull/313) ([neonmei](https://github.com/neonmei))
+- Bump version to v4.0.3 [\#311](https://github.com/wazuh/wazuh-puppet/pull/311) ([Zenidd](https://github.com/Zenidd))
+- templates: update jvm.options template with version information [\#310](https://github.com/wazuh/wazuh-puppet/pull/310) ([neonmei](https://github.com/neonmei))
+- Add missing parameters to email\_alert class [\#308](https://github.com/wazuh/wazuh-puppet/pull/308) ([ajurjevi](https://github.com/ajurjevi))
+- Fabian1976 fix authkey change [\#307](https://github.com/wazuh/wazuh-puppet/pull/307) ([Zenidd](https://github.com/Zenidd))
+- syscheck 'report\_changes' option requires a blank line [\#306](https://github.com/wazuh/wazuh-puppet/pull/306) ([Zenidd](https://github.com/Zenidd))
+- wazuh-puppet: bump versions to 4.0.2 [\#304](https://github.com/wazuh/wazuh-puppet/pull/304) ([Zenidd](https://github.com/Zenidd))
+-  wazuh-puppet release 4.0.1 minor fixes [\#303](https://github.com/wazuh/wazuh-puppet/pull/303) ([Zenidd](https://github.com/Zenidd))
+- Bump version to 4.0.1 [\#302](https://github.com/wazuh/wazuh-puppet/pull/302) ([Zenidd](https://github.com/Zenidd))
+- Adapt modules to Wazuh v4.0 [\#300](https://github.com/wazuh/wazuh-puppet/pull/300) ([manuasir](https://github.com/manuasir))
+- Adapt modules to Wazuh v4.0 [\#299](https://github.com/wazuh/wazuh-puppet/pull/299) ([manuasir](https://github.com/manuasir))
+- Adding syslog\_output support on `wazuh-puppet` [\#276](https://github.com/wazuh/wazuh-puppet/pull/276) ([Zenidd](https://github.com/Zenidd))
+- wazuh-puppet tests on GitHub Actions [\#274](https://github.com/wazuh/wazuh-puppet/pull/274) ([Zenidd](https://github.com/Zenidd))
+- Bump version to 3.13.1\_7.8.0 [\#272](https://github.com/wazuh/wazuh-puppet/pull/272) ([Zenidd](https://github.com/Zenidd))
+- Release Wazuh 3.13.0 7.7.1 [\#268](https://github.com/wazuh/wazuh-puppet/pull/268) ([jm404](https://github.com/jm404))
+- Wazuh release 3.12.3 7.6.2 [\#253](https://github.com/wazuh/wazuh-puppet/pull/253) ([jm404](https://github.com/jm404))
+- Fixes \#250, adds $ossec\_remote\_local\_ip parameter [\#251](https://github.com/wazuh/wazuh-puppet/pull/251) ([alanwevans](https://github.com/alanwevans))
+- Fixes \#248 : Add option for report files changes in syscheck [\#249](https://github.com/wazuh/wazuh-puppet/pull/249) ([djmgit](https://github.com/djmgit))
+- Wazuh Puppet release 3.12.2-7.6.2 [\#247](https://github.com/wazuh/wazuh-puppet/pull/247) ([Zenidd](https://github.com/Zenidd))
+- Add strict order to audit module's tasks [\#242](https://github.com/wazuh/wazuh-puppet/pull/242) ([rshad](https://github.com/rshad))
+- Add syscollector related config in Wazuh Agent manifest [\#241](https://github.com/wazuh/wazuh-puppet/pull/241) ([rshad](https://github.com/rshad))
+- Fix typo in a variable name [\#237](https://github.com/wazuh/wazuh-puppet/pull/237) ([rshad](https://github.com/rshad))
+- Release Wazuh 3.12.0\_7.6.1 [\#236](https://github.com/wazuh/wazuh-puppet/pull/236) ([rshad](https://github.com/rshad))
+- Adapt active-response definition [\#234](https://github.com/wazuh/wazuh-puppet/pull/234) ([rshad](https://github.com/rshad))
+- Upgrade to NodeJS v10 [\#230](https://github.com/wazuh/wazuh-puppet/pull/230) ([xr09](https://github.com/xr09))
+- Always treat $ossec\_emailnotification as a boolean [\#229](https://github.com/wazuh/wazuh-puppet/pull/229) ([alanwevans](https://github.com/alanwevans))
+- Fixes \#227 : Add system\_audit subsection in rootcheck [\#228](https://github.com/wazuh/wazuh-puppet/pull/228) ([djmgit](https://github.com/djmgit))
+- Fixes \#225 : Option to configure audit rules from this module itself [\#226](https://github.com/wazuh/wazuh-puppet/pull/226) ([djmgit](https://github.com/djmgit))
+- Release Wazuh 3.11.4 7.6.1 [\#224](https://github.com/wazuh/wazuh-puppet/pull/224) ([jm404](https://github.com/jm404))
+- Fixes \#215: Fix audit package name for Debian [\#216](https://github.com/wazuh/wazuh-puppet/pull/216) ([djmgit](https://github.com/djmgit))
+- Add a parameter wazuh\_api::manage\_nodejs\_package [\#213](https://github.com/wazuh/wazuh-puppet/pull/213) ([Hexta](https://github.com/Hexta))
+- Add a parameter ossec\_rootcheck\_ignore\_list [\#212](https://github.com/wazuh/wazuh-puppet/pull/212) ([Hexta](https://github.com/Hexta))
+- Release Wazuh 3.11.3\_7.5.2 [\#207](https://github.com/wazuh/wazuh-puppet/pull/207) ([rshad](https://github.com/rshad))
+- Improved agent Windows config. and secondary fixes [\#205](https://github.com/wazuh/wazuh-puppet/pull/205) ([rshad](https://github.com/rshad))
+- Release Wazuh 3.11.2\_7.5.1 [\#204](https://github.com/wazuh/wazuh-puppet/pull/204) ([rshad](https://github.com/rshad))
+- Fix for Puppet installation on Amazon Linux OS [\#197](https://github.com/wazuh/wazuh-puppet/pull/197) ([rshad](https://github.com/rshad))
+- Wazuh release 3.11.1\_7.5.1 [\#196](https://github.com/wazuh/wazuh-puppet/pull/196) ([jm404](https://github.com/jm404))
+- Adapt to new Wazuh API configuration [\#195](https://github.com/wazuh/wazuh-puppet/pull/195) ([jm404](https://github.com/jm404))
+- Wazuh release 3.11.0 7.5.1 [\#192](https://github.com/wazuh/wazuh-puppet/pull/192) ([jm404](https://github.com/jm404))
+- Changes to make `ossec.conf` equivalent to the default version [\#190](https://github.com/wazuh/wazuh-puppet/pull/190) ([rshad](https://github.com/rshad))
+- Parameterize templates [\#187](https://github.com/wazuh/wazuh-puppet/pull/187) ([rshad](https://github.com/rshad))
+- Add explicit execution order for Puppet manifests tasks [\#183](https://github.com/wazuh/wazuh-puppet/pull/183) ([rshad](https://github.com/rshad))
+- Replace static systemd commands [\#181](https://github.com/wazuh/wazuh-puppet/pull/181) ([rshad](https://github.com/rshad))
+- missing config-profiles values. [\#179](https://github.com/wazuh/wazuh-puppet/pull/179) ([tnmt](https://github.com/tnmt))
+- Modify Elasticsearch default IP [\#178](https://github.com/wazuh/wazuh-puppet/pull/178) ([rshad](https://github.com/rshad))
+- agent labels support [\#177](https://github.com/wazuh/wazuh-puppet/pull/177) ([tnmt](https://github.com/tnmt))
+- Parameterize `whodata` and `realtime` and add related dependencies [\#175](https://github.com/wazuh/wazuh-puppet/pull/175) ([rshad](https://github.com/rshad))
+- Update Filebeat module [\#174](https://github.com/wazuh/wazuh-puppet/pull/174) ([rshad](https://github.com/rshad))
+- Fix agent.conf path in wazuh-manager [\#172](https://github.com/wazuh/wazuh-puppet/pull/172) ([rshad](https://github.com/rshad))
+- add debian buster support [\#167](https://github.com/wazuh/wazuh-puppet/pull/167) ([aderumier](https://github.com/aderumier))
+- notify agent service when ossec.conf change [\#166](https://github.com/wazuh/wazuh-puppet/pull/166) ([aderumier](https://github.com/aderumier))
+- Fix the Wazuh agent installation on Windows [\#163](https://github.com/wazuh/wazuh-puppet/pull/163) ([JPLachance](https://github.com/JPLachance))
+- Wazuh Puppet v3.10.2\_7.3.2 [\#157](https://github.com/wazuh/wazuh-puppet/pull/157) ([manuasir](https://github.com/manuasir))
+- new release 3.10.0 7.3.2 Bump Version [\#156](https://github.com/wazuh/wazuh-puppet/pull/156) ([rshad](https://github.com/rshad))
+- add OracleLinux to manager and agent [\#153](https://github.com/wazuh/wazuh-puppet/pull/153) ([rwaffen](https://github.com/rwaffen))
+- Fixes for Ossec email notifications' config [\#150](https://github.com/wazuh/wazuh-puppet/pull/150) ([rshad](https://github.com/rshad))
+- Update outdated dependency versions [\#147](https://github.com/wazuh/wazuh-puppet/pull/147) ([cubiclelord](https://github.com/cubiclelord))
+- Adding Filebeat module and adapted Elasticsearch IP  [\#144](https://github.com/wazuh/wazuh-puppet/pull/144) ([rshad](https://github.com/rshad))
+- Move command and email\_alert templates to  templates/fragments [\#143](https://github.com/wazuh/wazuh-puppet/pull/143) ([rshad](https://github.com/rshad))
+- Fix integration when group is not specified [\#142](https://github.com/wazuh/wazuh-puppet/pull/142) ([TheoPoc](https://github.com/TheoPoc))
+- Added Ubuntu as a recognized operating system to Puppet manifests [\#141](https://github.com/wazuh/wazuh-puppet/pull/141) ([rshad](https://github.com/rshad))
+- Kitchen testing for Wazuh deployment with Puppet [\#139](https://github.com/wazuh/wazuh-puppet/pull/139) ([rshad](https://github.com/rshad))
+- Make Wazuh Agent able to register and report to different IPs [\#136](https://github.com/wazuh/wazuh-puppet/pull/136) ([jm404](https://github.com/jm404))
+- 3.9.3\_7.2.0 Adapting components versions, CHANGELOG.md and README.md for the new release [\#134](https://github.com/wazuh/wazuh-puppet/pull/134) ([rshad](https://github.com/rshad))
+- Release 3.9.2\_7.1.1 [\#129](https://github.com/wazuh/wazuh-puppet/pull/129) ([jm404](https://github.com/jm404))
+- Wazuh Puppet 3.9.1\_7.1.0 [\#128](https://github.com/wazuh/wazuh-puppet/pull/128) ([jm404](https://github.com/jm404))
+- Update to Wazuh 3.9.0 [\#118](https://github.com/wazuh/wazuh-puppet/pull/118) ([manuasir](https://github.com/manuasir))
+- Allow certificates to be defined by file path [\#112](https://github.com/wazuh/wazuh-puppet/pull/112) ([LuisGi93](https://github.com/LuisGi93))
+- Update to Wazuh version 3.8.2 [\#107](https://github.com/wazuh/wazuh-puppet/pull/107) ([SitoRBJ](https://github.com/SitoRBJ))
+- Update to Wazuh version 3.8.1 [\#104](https://github.com/wazuh/wazuh-puppet/pull/104) ([SitoRBJ](https://github.com/SitoRBJ))
+- create auth section in ossec.conf [\#103](https://github.com/wazuh/wazuh-puppet/pull/103) ([MrSecure](https://github.com/MrSecure))
+- Upgrade version 3.8.0 [\#102](https://github.com/wazuh/wazuh-puppet/pull/102) ([LuisGi93](https://github.com/LuisGi93))
+- install package even if repos are not managed by wazuh [\#99](https://github.com/wazuh/wazuh-puppet/pull/99) ([St4n](https://github.com/St4n))
+- Feature/agent auth cert key [\#98](https://github.com/wazuh/wazuh-puppet/pull/98) ([LuisGi93](https://github.com/LuisGi93))
+- Updating params.pp and \_common.erb so all the options of localfile can be used [\#97](https://github.com/wazuh/wazuh-puppet/pull/97) ([LuisGi93](https://github.com/LuisGi93))
+- Update windows agent version [\#96](https://github.com/wazuh/wazuh-puppet/pull/96) ([SitoRBJ](https://github.com/SitoRBJ))
+- Fixing process\_list.erb performance [\#94](https://github.com/wazuh/wazuh-puppet/pull/94) ([SitoRBJ](https://github.com/SitoRBJ))
+- addlog command support [\#90](https://github.com/wazuh/wazuh-puppet/pull/90) ([SitoRBJ](https://github.com/SitoRBJ))
+- add integration support [\#89](https://github.com/wazuh/wazuh-puppet/pull/89) ([SitoRBJ](https://github.com/SitoRBJ))
+- Add support for Wazuh 3.x  [\#85](https://github.com/wazuh/wazuh-puppet/pull/85) ([cadoming](https://github.com/cadoming))
+- Add support for who data [\#84](https://github.com/wazuh/wazuh-puppet/pull/84) ([jamebus](https://github.com/jamebus))
+- Grouping agents [\#82](https://github.com/wazuh/wazuh-puppet/pull/82) ([hfm](https://github.com/hfm))
+- Fix firewall module and support excluding decoders and rules [\#81](https://github.com/wazuh/wazuh-puppet/pull/81) ([jamebus](https://github.com/jamebus))
+- install client package even when manage\_repo is false [\#79](https://github.com/wazuh/wazuh-puppet/pull/79) ([MrSecure](https://github.com/MrSecure))
+- Add syslog port & level support level to manager configuration [\#78](https://github.com/wazuh/wazuh-puppet/pull/78) ([MrSecure](https://github.com/MrSecure))
+- Fix username \(puppet to puppetlabs\) [\#74](https://github.com/wazuh/wazuh-puppet/pull/74) ([hfm](https://github.com/hfm))
+- refac\(description\) remove undefined repotype variable [\#65](https://github.com/wazuh/wazuh-puppet/pull/65) ([minorOffense](https://github.com/minorOffense))
+- fix default value for array [\#64](https://github.com/wazuh/wazuh-puppet/pull/64) ([minorOffense](https://github.com/minorOffense))
+- Reserved words should be quoted [\#61](https://github.com/wazuh/wazuh-puppet/pull/61) ([jsnod](https://github.com/jsnod))
+- Fix the $manage\_repos attribute. [\#55](https://github.com/wazuh/wazuh-puppet/pull/55) ([pillarsdotnet](https://github.com/pillarsdotnet))
+- Fixes for Amazon Linux. [\#54](https://github.com/wazuh/wazuh-puppet/pull/54) ([pillarsdotnet](https://github.com/pillarsdotnet))
+- Fixes [\#51](https://github.com/wazuh/wazuh-puppet/pull/51) ([ghost](https://github.com/ghost))
+- Profile name for Centos 7 is not \_server, it's \_common like RHEL7 [\#38](https://github.com/wazuh/wazuh-puppet/pull/38) ([juliovalcarcel](https://github.com/juliovalcarcel))
+- Enable HTTPS in wazuh-api [\#37](https://github.com/wazuh/wazuh-puppet/pull/37) ([rafaelfc-olx](https://github.com/rafaelfc-olx))
+- Adding notify\_time and time-reconnect options to client config [\#36](https://github.com/wazuh/wazuh-puppet/pull/36) ([rafaelfc-olx](https://github.com/rafaelfc-olx))
+- Configuring wazuh-api from puppet [\#35](https://github.com/wazuh/wazuh-puppet/pull/35) ([rafaelfc-olx](https://github.com/rafaelfc-olx))
+- Adding support for changing the client protocol and validating the manager by CA [\#34](https://github.com/wazuh/wazuh-puppet/pull/34) ([rafaelfc-olx](https://github.com/rafaelfc-olx))
+- Add the server option to the apt :: key section [\#33](https://github.com/wazuh/wazuh-puppet/pull/33) ([jnarvaezp](https://github.com/jnarvaezp))
+- Preventing Duplicated declaration issues regarding apt-transport-https package [\#32](https://github.com/wazuh/wazuh-puppet/pull/32) ([rafaelfc-olx](https://github.com/rafaelfc-olx))
+- Managing wazuh-api alongside with wazuh-manager [\#31](https://github.com/wazuh/wazuh-puppet/pull/31) ([rafaelfc-olx](https://github.com/rafaelfc-olx))
+- Adding support for changing ossec\_server\_protocol [\#30](https://github.com/wazuh/wazuh-puppet/pull/30) ([rafaelfc-olx](https://github.com/rafaelfc-olx))
+- Correct issue with selinux ossec logrotate [\#27](https://github.com/wazuh/wazuh-puppet/pull/27) ([mstathers](https://github.com/mstathers))
+- Enforce apt-get update on Debian based system [\#23](https://github.com/wazuh/wazuh-puppet/pull/23) ([lemrouch](https://github.com/lemrouch))
+- Allow basic email daily reports setup [\#20](https://github.com/wazuh/wazuh-puppet/pull/20) ([lemrouch](https://github.com/lemrouch))
+- Ensure apt-transport-https is installed on Debian based OS [\#17](https://github.com/wazuh/wazuh-puppet/pull/17) ([lemrouch](https://github.com/lemrouch))
+- Say which variable should be really set. [\#16](https://github.com/wazuh/wazuh-puppet/pull/16) ([lemrouch](https://github.com/lemrouch))
+- Development [\#14](https://github.com/wazuh/wazuh-puppet/pull/14) ([jlruizmlg](https://github.com/jlruizmlg))
+- add $wodle\_openscap\_content parameter to server.pp [\#13](https://github.com/wazuh/wazuh-puppet/pull/13) ([hex2a](https://github.com/hex2a))
+- explicitly use the windows package provider [\#11](https://github.com/wazuh/wazuh-puppet/pull/11) ([damoxc](https://github.com/damoxc))
+- Correct misspelling: "maintaing" --\> "maintaining" [\#10](https://github.com/wazuh/wazuh-puppet/pull/10) ([pillarsdotnet](https://github.com/pillarsdotnet))
+- enable fedora 24 for testing [\#9](https://github.com/wazuh/wazuh-puppet/pull/9) ([ddholstad99](https://github.com/ddholstad99))
+- Added legacy mcollective facts file to the list of the ignored directories [\#8](https://github.com/wazuh/wazuh-puppet/pull/8) ([elisiano](https://github.com/elisiano))
+- add file resource for client.keys when using authd [\#2](https://github.com/wazuh/wazuh-puppet/pull/2) ([hex2a](https://github.com/hex2a))
+- wazuh module [\#1](https://github.com/wazuh/wazuh-puppet/pull/1) ([hex2a](https://github.com/hex2a))
 
 ## Wazuh Puppet v4.1.5
 
@@ -714,3 +1054,5 @@ Michael Porter <michael.porter@lightningsource.com>:
 
  Jonathan Gazeley <jonathan.gazeley@bristol.ac.uk>:
   * Add support for Debian "Jessie" (thanks to @ivan7farre)
+
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
