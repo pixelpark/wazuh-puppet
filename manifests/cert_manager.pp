@@ -10,7 +10,6 @@ define wazuh::cert_manager (
   String                         $cert_mode       = '0400',
   Hash                          $cert_data        = {},
 ) {
-
   # Validate component specific parameters
   $real_target_path = pick($target_path, $source_path)
 
@@ -18,7 +17,7 @@ define wazuh::cert_manager (
   case $component_type {
     'indexer': {
       $cert_prefix = 'indexer'
-      $required_certs = ['root-ca', 'admin', "${cert_prefix}-${component_name}"]
+      $required_certs = ['root-ca', 'admin', $component_name]
     }
     'dashboard': {
       $cert_prefix = 'dashboard'
@@ -26,7 +25,7 @@ define wazuh::cert_manager (
     }
     'manager': {
       $cert_prefix = 'manager'
-      $required_certs = ['root-ca', "${cert_prefix}-${component_name}"]
+      $required_certs = ['root-ca', $component_name]
     }
     default: {
       fail("Unsupported component type: ${component_type}")
