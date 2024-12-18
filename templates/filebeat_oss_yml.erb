@@ -18,9 +18,9 @@ output.elasticsearch:
   password: <%= @filebeat_oss_elastic_password %>
   protocol: https
   ssl.certificate_authorities:
-    - /etc/filebeat/certs/root-ca.pem
-  ssl.certificate: "/etc/filebeat/certs/filebeat.pem"
-  ssl.key: "/etc/filebeat/certs/filebeat-key.pem"
+    - <%= @filebeat_path_certs %>/root-ca.pem
+  ssl.certificate: "<%= @filebeat_path_certs %>/manager-<%= @filebeat_component_name %>.pem"
+  ssl.key: "<%= @filebeat_path_certs %>/manager-<%= @filebeat_component_name %>-key.pem"
 
 setup.ilm.enabled: false
 
