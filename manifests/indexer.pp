@@ -32,7 +32,11 @@ class wazuh::indexer (
     'Debian': {
       $indexer_version_install = "${indexer_version}-*"
     }
-    'Linux', 'RedHat', default: {
+    'RedHat': {
+      # Include full VERSION-RELEASE format for RedHat family
+      $indexer_version_install = "${indexer_version}-1"
+    }
+    default: {
       $indexer_version_install = $indexer_version
     }
   }
