@@ -72,12 +72,12 @@ class wazuh::filebeat_oss (
     require => Package['filebeat'],
   }
 
-  wazuh::certificate { ["manager-${wazuh_node_name}", 'root-ca']:
-    cert_path   => $filebeat_path_certs,
-    owner       => $filebeat_fileuser,
-    group       => $filebeat_filegroup,
-    target_path => $filebeat_path_certs,
-    require     => Package['filebeat'],
+  wazuh::cert_manager { $wazuh_node_name:
+    component_type => 'manager',
+    target_path    => $filebeat_path_certs,
+    owner          => $filebeat_fileuser,
+    group          => $filebeat_filegroup,
+    require        => Package['filebeat'],
   }
 
   service { 'filebeat':

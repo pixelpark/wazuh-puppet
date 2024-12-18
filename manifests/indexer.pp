@@ -43,12 +43,12 @@ class wazuh::indexer (
     name   => $indexer_package,
   }
 
-  wazuh::certificate { ["indexer-${indexer_node_name}", 'admin', 'root-ca']:
-    cert_path   => $indexer_path_certs,
-    owner       => $indexer_fileuser,
-    group       => $indexer_filegroup,
-    target_path => $indexer_path_certs,
-    require     => Package['wazuh-indexer'],
+  wazuh::cert_manager { $indexer_node_name:
+    component_type => 'indexer',
+    target_path    => $indexer_path_certs,
+    owner          => $indexer_fileuser,
+    group          => $indexer_filegroup,
+    require        => Package['wazuh-indexer'],
   }
 
   file { 'configuration file':

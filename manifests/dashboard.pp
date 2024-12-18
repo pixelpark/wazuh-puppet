@@ -48,12 +48,12 @@ class wazuh::dashboard (
     name   => $dashboard_package,
   }
 
-  wazuh::certificate { ['dashboard', 'root-ca']:
-    cert_path   => $dashboard_path_certs,
-    owner       => $dashboard_fileuser,
-    group       => $dashboard_filegroup,
-    target_path => $dashboard_path_certs,
-    require     => Package['wazuh-dashboard'],
+  wazuh::cert_manager { 'dashboard':
+    component_type => 'dashboard',
+    target_path    => $dashboard_path_certs,
+    owner          => $dashboard_fileuser,
+    group          => $dashboard_filegroup,
+    require        => Package['wazuh-dashboard'],
   }
 
   file { '/etc/wazuh-dashboard/opensearch_dashboards.yml':
