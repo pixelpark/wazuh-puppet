@@ -19,8 +19,8 @@ output.elasticsearch:
   protocol: https
   ssl.certificate_authorities:
     - <%= @filebeat_path_certs %>/root-ca.pem
-  ssl.certificate: "<%= @filebeat_path_certs %>/manager-<%= @filebeat_component_name %>.pem"
-  ssl.key: "<%= @filebeat_path_certs %>/manager-<%= @filebeat_component_name %>-key.pem"
+  ssl.certificate: "<%= @filebeat_path_certs %>/manager-<%= @wazuh_node_name %>.pem"
+  ssl.key: "<%= @filebeat_path_certs %>/manager-<%= @wazuh_node_name %>-key.pem"
 
 setup.ilm.enabled: false
 
