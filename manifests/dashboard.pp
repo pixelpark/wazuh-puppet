@@ -32,7 +32,6 @@ class wazuh::dashboard (
   ],
 
 ) {
-
   # assign version according to the package manager
   case $facts['os']['family'] {
     'Debian': {
@@ -49,33 +48,12 @@ class wazuh::dashboard (
     name   => $dashboard_package,
   }
 
-  exec { "ensure full path of ${dashboard_path_certs}":
-    path    => '/usr/bin:/bin',
-    command => "mkdir -p ${dashboard_path_certs}",
-    creates => $dashboard_path_certs,
-    require => Package['wazuh-dashboard'],
-  }
-  -> file { $dashboard_path_certs:
-    ensure => directory,
-    owner  => $dashboard_fileuser,
-    group  => $dashboard_filegroup,
-    mode   => '0500',
-  }
-
-  [
-    'dashboard.pem',
-    'dashboard-key.pem',
-    'root-ca.pem',
-  ].each |String $certfile| {
-    file { "${dashboard_path_certs}/${certfile}":
-      ensure  => file,
-      owner   => $dashboard_fileuser,
-      group   => $dashboard_filegroup,
-      mode    => '0400',
-      replace => true,
-      recurse => remote,
-      source  => "puppet:///modules/archive/${certfile}",
-    }
+  wazuh::certificate { ['dashboard', 'root-ca']:
+    cert_path   => $dashboard_path_certs,
+    owner       => $dashboard_fileuser,
+    group       => $dashboard_filegroup,
+    target_path => $dashboard_path_certs,
+    require     => Package['wazuh-dashboard'],
   }
 
   file { '/etc/wazuh-dashboard/opensearch_dashboards.yml':
@@ -87,7 +65,7 @@ class wazuh::dashboard (
     notify  => Service['wazuh-dashboard'],
   }
 
-  file { [ '/usr/share/wazuh-dashboard/data/wazuh/', '/usr/share/wazuh-dashboard/data/wazuh/config' ]:
+  file { ['/usr/share/wazuh-dashboard/data/wazuh/', '/usr/share/wazuh-dashboard/data/wazuh/config']:
     ensure  => 'directory',
     group   => $dashboard_filegroup,
     mode    => '0755',

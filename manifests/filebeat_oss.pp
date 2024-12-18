@@ -20,7 +20,6 @@ class wazuh::filebeat_oss (
   $filebeat_filegroup = 'root',
   $filebeat_path_certs = '/etc/filebeat/certs',
 ) {
-
   package { 'filebeat':
     ensure => $filebeat_oss_version,
     name   => $filebeat_oss_package,
@@ -73,34 +72,12 @@ class wazuh::filebeat_oss (
     require => Package['filebeat'],
   }
 
-  exec { "ensure full path of ${filebeat_path_certs}":
-    path    => '/usr/bin:/bin',
-    command => "mkdir -p ${filebeat_path_certs}",
-    creates => $filebeat_path_certs,
-    require => Package['filebeat'],
-  }
-  -> file { $filebeat_path_certs:
-    ensure => directory,
-    owner  => $filebeat_fileuser,
-    group  => $filebeat_filegroup,
-    mode   => '0500',
-  }
-
-  $_certfiles = {
-    "manager-${wazuh_node_name}.pem"     => 'filebeat.pem',
-    "manager-${wazuh_node_name}-key.pem" => 'filebeat-key.pem',
-    'root-ca.pem'    => 'root-ca.pem',
-  }
-  $_certfiles.each |String $certfile_source, String $certfile_target| {
-    file { "${filebeat_path_certs}/${certfile_target}":
-      ensure  => file,
-      owner   => $filebeat_fileuser,
-      group   => $filebeat_filegroup,
-      mode    => '0400',
-      replace => true,
-      recurse => remote,
-      source  => "puppet:///modules/archive/${certfile_source}",
-    }
+  wazuh::certificate { ["manager-${wazuh_node_name}", 'root-ca']:
+    cert_path   => $filebeat_path_certs,
+    owner       => $filebeat_fileuser,
+    group       => $filebeat_filegroup,
+    target_path => $filebeat_path_certs,
+    require     => Package['filebeat'],
   }
 
   service { 'filebeat':
