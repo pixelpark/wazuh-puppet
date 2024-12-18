@@ -341,10 +341,6 @@ class wazuh::params_manager {
       $wazuh_api_cors_allow_headers = '"*"'
       $wazuh_api_cors_allow_credentials = 'no'
 
-      # Cache (time in seconds)
-      $wazuh_api_cache_enabled = 'yes'
-      $wazuh_api_cache_time = '0.750'
-
       # Access parameters
       $wazuh_api_access_max_login_attempts = 5
       $wazuh_api_access_block_time = 300
