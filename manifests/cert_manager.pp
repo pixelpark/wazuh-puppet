@@ -10,40 +10,29 @@ define wazuh::cert_manager (
   String                         $cert_mode       = '0400',
   Hash                          $cert_data        = {},
 ) {
-  # Component configuration hash
-  $component_configs = {
-    'indexer' => {
-      'cert_prefix'     => 'indexer',
-      'required_certs'  => ['root-ca', 'admin', $component_name],
-      'source_mapping'  => {
-        'root-ca' => 'root-ca',
-        'admin'   => 'admin',
-        $component_name => $component_name,
-      },
-    },
-    'dashboard' => {
-      'cert_prefix'     => 'dashboard',
-      'required_certs'  => ['root-ca', 'dashboard'],
-      'source_mapping'  => {
-        'root-ca'   => 'root-ca',
-        'dashboard' => 'dashboard',
-      },
-    },
-    'manager' => {
-      'cert_prefix'     => 'manager',
-      'required_certs'  => ['root-ca', $component_name],
-      'source_mapping'  => {
-        'root-ca'      => 'root-ca',
-        $component_name => "manager-${component_name}",
-      },
-    },
-  }
-
-  # Get configuration for current component type
-  $config = $component_configs[$component_type]
+  # Validate component specific parameters
   $real_target_path = pick($target_path, $source_path)
 
-  # Create target directory if needed
+  # Construct certificate paths based on component type
+  case $component_type {
+    'indexer': {
+      $cert_prefix = 'indexer'
+      $required_certs = ['root-ca', 'admin', "${cert_prefix}-${component_name}"]
+    }
+    'dashboard': {
+      $cert_prefix = 'dashboard'
+      $required_certs = ['root-ca', $cert_prefix]
+    }
+    'manager': {
+      $cert_prefix = 'manager'
+      $required_certs = ['root-ca', "${cert_prefix}-${component_name}"]
+    }
+    default: {
+      fail("Unsupported component type: ${component_type}")
+    }
+  }
+
+  # Ensure target directory exists if different from source
   if $real_target_path != $source_path {
     ensure_resource('file', $real_target_path, {
         'ensure' => 'directory',
@@ -53,34 +42,32 @@ define wazuh::cert_manager (
     })
   }
 
-  # Define virtual resources for certificates
-  $config['required_certs'].each |$cert| {
-    @file { "${real_target_path}/${cert}.pem":
-      ensure    => file,
-      owner     => $owner,
-      group     => $group,
-      mode      => $cert_mode,
-      source    => "${source_path}/${config['source_mapping'][$cert]}.pem",
-      show_diff => false,
-      require   => Exec['Create Wazuh Certificates'],
-      tag       => "${component_type}_certs",
+  # Create links for required certificates
+  $required_certs.each |String $cert| {
+    # Skip if cert is already managed by another resource
+    unless defined(File["${real_target_path}/${cert}.pem"]) {
+      file { "${real_target_path}/${cert}.pem":
+        ensure    => file,
+        owner     => $owner,
+        group     => $group,
+        mode      => $cert_mode,
+        source    => "${source_path}/${cert}.pem",
+        show_diff => false,
+        require   => Exec['Create Wazuh Certificates'],
+      }
+
+      # Handle key files (except for root-ca)
+      if $cert != 'root-ca' {
+        file { "${real_target_path}/${cert}-key.pem":
+          ensure    => file,
+          owner     => $owner,
+          group     => $group,
+          mode      => $cert_mode,
+          source    => "${source_path}/${cert}-key.pem",
+          show_diff => false,
+          require   => Exec['Create Wazuh Certificates'],
+        }
+      }
     }
   }
-
-  # Define virtual resources for key files (excluding root-ca)
-  ($config['required_certs'] - ['root-ca']).each |$cert| {
-    @file { "${real_target_path}/${cert}-key.pem":
-      ensure    => file,
-      owner     => $owner,
-      group     => $group,
-      mode      => $cert_mode,
-      source    => "${source_path}/${config['source_mapping'][$cert]}-key.pem",
-      show_diff => false,
-      require   => Exec['Create Wazuh Certificates'],
-      tag       => "${component_type}_certs",
-    }
-  }
-
-  # Realize all virtual resources for this component type
-  File <| tag == "${component_type}_certs" |>
 }
