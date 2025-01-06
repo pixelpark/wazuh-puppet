@@ -34,7 +34,7 @@ define wazuh::cert_manager (
       'required_certs'  => ['root-ca', $component_name],
       'source_mapping'  => {
         'root-ca'      => 'root-ca',
-        $component_name => "manager-${component_name}",
+        $component_name => $component_name,
       },
     },
   }
