@@ -1,5 +1,4 @@
 # Define: wazuh::cert_manager
-# Manages certificate creation and deployment for Wazuh components
 define wazuh::cert_manager (
   String                         $component_name  = $title,
   Enum['indexer', 'dashboard', 'manager'] $component_type,
@@ -18,7 +17,7 @@ define wazuh::cert_manager (
       'source_mapping'  => {
         'root-ca' => 'root-ca',
         'admin'   => 'admin',
-        $component_name => $component_name,
+        $component_name => "indexer-${component_name}",
       },
     },
     'dashboard' => {
@@ -39,11 +38,9 @@ define wazuh::cert_manager (
     },
   }
 
-  # Get configuration for current component type
   $config = $component_configs[$component_type]
   $real_target_path = pick($target_path, $source_path)
 
-  # Create target directory if needed
   if $real_target_path != $source_path {
     ensure_resource('file', $real_target_path, {
         'ensure' => 'directory',
@@ -55,12 +52,13 @@ define wazuh::cert_manager (
 
   # Define virtual resources for certificates
   $config['required_certs'].each |$cert| {
-    @file { "${real_target_path}/${cert}.pem":
+    $source_name = $config['source_mapping'][$cert]
+    @file { "${real_target_path}/${source_name}.pem":
       ensure    => file,
       owner     => $owner,
       group     => $group,
       mode      => $cert_mode,
-      source    => "${source_path}/${config['source_mapping'][$cert]}.pem",
+      source    => "${source_path}/${source_name}.pem",
       show_diff => false,
       require   => Exec['Create Wazuh Certificates'],
       tag       => "${component_type}_certs",
@@ -69,18 +67,19 @@ define wazuh::cert_manager (
 
   # Define virtual resources for key files (excluding root-ca)
   ($config['required_certs'] - ['root-ca']).each |$cert| {
-    @file { "${real_target_path}/${cert}-key.pem":
+    $source_name = $config['source_mapping'][$cert]
+    @file { "${real_target_path}/${source_name}-key.pem":
       ensure    => file,
       owner     => $owner,
       group     => $group,
       mode      => $cert_mode,
-      source    => "${source_path}/${config['source_mapping'][$cert]}-key.pem",
+      source    => "${source_path}/${source_name}-key.pem",
       show_diff => false,
       require   => Exec['Create Wazuh Certificates'],
       tag       => "${component_type}_certs",
     }
   }
 
-  # Realize all virtual resources for this component type
+  # Realize all virtual resources
   File <| tag == "${component_type}_certs" |>
 }
