@@ -14,11 +14,11 @@ discovery.seed_hosts:
 node.max_local_storage_nodes: "<%= @indexer_node_max_local_storage_nodes %>"
 path.data: "<%= @indexer_path_data %>"
 path.logs: "<%= @indexer_path_logs %>"
-plugins.security.ssl.http.pemcert_filepath: <%= @indexer_path_certs %>/<%= @indexer_node_name %>.pem
-plugins.security.ssl.http.pemkey_filepath: <%= @indexer_path_certs %>/<%= @indexer_node_name %>-key.pem
+plugins.security.ssl.http.pemcert_filepath: <%= @indexer_path_certs %>/indexer-<%= @indexer_node_name %>.pem
+plugins.security.ssl.http.pemkey_filepath: <%= @indexer_path_certs %>/indexer-<%= @indexer_node_name %>-key.pem
 plugins.security.ssl.http.pemtrustedcas_filepath: <%= @indexer_path_certs %>/root-ca.pem
-plugins.security.ssl.transport.pemcert_filepath: <%= @indexer_path_certs %>/<%= @indexer_node_name %>.pem
-plugins.security.ssl.transport.pemkey_filepath: <%= @indexer_path_certs %>/<%= @indexer_node_name %>-key.pem
+plugins.security.ssl.transport.pemcert_filepath: <%= @indexer_path_certs %>/indexer-<%= @indexer_node_name %>.pem
+plugins.security.ssl.transport.pemkey_filepath: <%= @indexer_path_certs %>/indexer-<%= @indexer_node_name %>-key.pem
 plugins.security.ssl.transport.pemtrustedcas_filepath: <%= @indexer_path_certs %>/root-ca.pem
 plugins.security.ssl.http.enabled: true
 plugins.security.ssl.transport.enforce_hostname_verification: false
