@@ -35,14 +35,14 @@ class wazuh::dashboard (
   # assign version according to the package manager
   case $facts['os']['family'] {
     'Debian': {
-      $indexer_version_install = "${indexer_version}-*"
+      $dashboard_version_install = "${dashboard_version}-*"
     }
     'RedHat': {
       # Include full VERSION-RELEASE format for RedHat family
-      $indexer_version_install = "${indexer_version}-1"
+      $dashboard_version_install = "${dashboard_version}-1"
     }
     default: {
-      $indexer_version_install = $indexer_version
+      $dashboard_version_install = $dashboard_version
     }
   }
 
