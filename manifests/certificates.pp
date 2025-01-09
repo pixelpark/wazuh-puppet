@@ -8,6 +8,14 @@ class wazuh::certificates (
   $dashboard_certs = [],
   $certificates_store_path = '/etc/wazuh/certs_store'
 ) {
+  # First ensure parent directory exists
+  file { '/etc/wazuh':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
   file { 'Configure Wazuh Certificates config.yml':
     owner   => 'root',
     path    => '/tmp/config.yml',
@@ -34,7 +42,7 @@ class wazuh::certificates (
     ],
   }
 
-  # Single file resource for the certificates directory
+  # Now create certificates directory and copy content
   file { $certificates_store_path:
     ensure  => 'directory',
     source  => '/tmp/wazuh-certificates/',
@@ -42,6 +50,9 @@ class wazuh::certificates (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => Exec['Create Wazuh Certificates'],
+    require => [
+      File['/etc/wazuh'],
+      Exec['Create Wazuh Certificates'],
+    ],
   }
 }
