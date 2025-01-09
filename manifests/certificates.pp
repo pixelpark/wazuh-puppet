@@ -6,7 +6,6 @@ class wazuh::certificates (
   $manager_master_certs = [],
   $manager_worker_certs = [],
   $dashboard_certs = [],
-  # Add new parameter with a more appropriate default path
   $certificates_store_path = '/etc/wazuh/certs_store'
 ) {
   file { 'Configure Wazuh Certificates config.yml':
@@ -35,20 +34,14 @@ class wazuh::certificates (
     ],
   }
 
+  # Single file resource for the certificates directory
   file { $certificates_store_path:
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-  }
-
-  file { 'Copy all certificates into store':
     ensure  => 'directory',
     source  => '/tmp/wazuh-certificates/',
     recurse => 'remote',
-    path    => $certificates_store_path,
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
+    require => Exec['Create Wazuh Certificates'],
   }
 }
