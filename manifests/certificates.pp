@@ -1,5 +1,3 @@
-# Copyright (C) 2015, Wazuh Inc.
-# Wazuh repository installation
 class wazuh::certificates (
   $wazuh_repository = 'packages.wazuh.com',
   $wazuh_version = '4.8',
@@ -7,7 +5,9 @@ class wazuh::certificates (
   $manager_certs = [],
   $manager_master_certs = [],
   $manager_worker_certs = [],
-  $dashboard_certs = []
+  $dashboard_certs = [],
+  # Add new parameter with a more appropriate default path
+  $certificates_store_path = '/etc/wazuh/certs_store'
 ) {
   file { 'Configure Wazuh Certificates config.yml':
     owner   => 'root',
@@ -34,13 +34,21 @@ class wazuh::certificates (
       File['/tmp/config.yml'],
     ],
   }
-  file { 'Copy all certificates into module':
-    ensure => 'directory',
-    source => '/tmp/wazuh-certificates/',
+
+  file { $certificates_store_path:
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
+  file { 'Copy all certificates into store':
+    ensure  => 'directory',
+    source  => '/tmp/wazuh-certificates/',
     recurse => 'remote',
-    path => '/etc/puppetlabs/code/environments/production/modules/archive/files/',
-    owner => 'root',
-    group => 'root',
-    mode  => '0755',
+    path    => $certificates_store_path,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
   }
 }
