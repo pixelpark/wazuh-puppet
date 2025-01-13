@@ -61,7 +61,10 @@ class wazuh::indexer (
     group   => $indexer_filegroup,
     mode    => '0660',
     owner   => $indexer_fileuser,
-    require => Package['wazuh-indexer'],
+    require => [
+      Package['wazuh-indexer'],
+      Wazuh::Cert_manager[$indexer_node_name],
+    ],
     notify  => Service['wazuh-indexer'],
   }
 
@@ -82,10 +85,18 @@ class wazuh::indexer (
   }
 
   service { 'wazuh-indexer':
-    ensure  => running,
-    enable  => true,
-    name    => $indexer_service,
-    require => Package['wazuh-indexer'],
+    ensure    => running,
+    enable    => true,
+    name      => $indexer_service,
+    require   => [
+      Package['wazuh-indexer'],
+      Wazuh::Cert_manager[$indexer_node_name],
+      File['configuration file'],
+    ],
+    subscribe => [
+      Wazuh::Cert_manager[$indexer_node_name],
+      File['configuration file'],
+    ],
   }
 
   file_line { "Insert line limits nofile for ${indexer_fileuser}":
@@ -112,7 +123,8 @@ class wazuh::indexer (
       command     => "chown ${indexer_fileuser}:${indexer_filegroup} -R ${file}",
       refreshonly => true,  # only run when package is installed or updated
       subscribe   => Package['wazuh-indexer'],
-      notify      => Service['wazuh-indexer'],
+      before      => Service['wazuh-indexer'],
+      require     => Wazuh::Cert_manager[$indexer_node_name],
     }
   }
 
