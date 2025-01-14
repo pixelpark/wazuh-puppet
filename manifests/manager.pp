@@ -165,7 +165,7 @@ class wazuh::manager (
   $vulnerability_indexer_enabled            = $wazuh::params_manager::vulnerability_indexer_enabled,
   $vulnerability_indexer_hosts_host         = $wazuh::params_manager::vulnerability_indexer_hosts_host,
   $vulnerability_indexer_hosts_port         = $wazuh::params_manager::vulnerability_indexer_hosts_port,
-  $vulnerability_indexer_username           = $wazuh::params_manager::vulnerability_indexer_username,
+  # $vulnerability_indexer_username           = $wazuh::params_manager::vulnerability_indexer_username,
   $vulnerability_indexer_password           = $wazuh::params_manager::vulnerability_indexer_password,
   $vulnerability_indexer_ssl_ca             = $wazuh::params_manager::vulnerability_indexer_ssl_ca,
   $vulnerability_indexer_ssl_certificate    = $wazuh::params_manager::vulnerability_indexer_ssl_certificate,
@@ -589,21 +589,21 @@ class wazuh::manager (
       content => "</ossec_config>\n";
   }
 
-  exec { 'Generate the wazuh-keystore (username)':
-    path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
-    command => "wazuh-keystore -f indexer -k username -v ${vulnerability_indexer_username}",
-    unless  => "test \"$(wazuh-keystore -f indexer -k username -s)\" = \"${vulnerability_indexer_username}\"",
-    require => Package[$wazuh::params_manager::server_package],
-    notify  => Service[$wazuh::params_manager::server_service],
-  }
+  # exec { 'Generate the wazuh-keystore (username)':
+  #   path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
+  #   command => "wazuh-keystore -f indexer -k username -v ${vulnerability_indexer_username}",
+  #   unless  => "test \"$(wazuh-keystore -f indexer -k username -s)\" = \"${vulnerability_indexer_username}\"",
+  #   require => Package[$wazuh::params_manager::server_package],
+  #   notify  => Service[$wazuh::params_manager::server_service],
+  # }
 
-  exec { 'Generate the wazuh-keystore (password)':
-    path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
-    command => "wazuh-keystore -f indexer -k password -v ${vulnerability_indexer_password}",
-    unless  => "test \"$(wazuh-keystore -f indexer -k password -s)\" = \"${vulnerability_indexer_password}\"",
-    require => Package[$wazuh::params_manager::server_package],
-    notify  => Service[$wazuh::params_manager::server_service],
-  }
+  # exec { 'Generate the wazuh-keystore (password)':
+  #   path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
+  #   command => "wazuh-keystore -f indexer -k password -v ${vulnerability_indexer_password}",
+  #   unless  => "test \"$(wazuh-keystore -f indexer -k password -s)\" = \"${vulnerability_indexer_password}\"",
+  #   require => Package[$wazuh::params_manager::server_package],
+  #   notify  => Service[$wazuh::params_manager::server_service],
+  # }
 
   if ( $manage_client_keys == 'yes') {
     # TODO: ensure the authd service is started if manage_client_keys == authd
