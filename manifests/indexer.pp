@@ -82,26 +82,31 @@
 #   Amount of memory to allocate to the JVM
 #   Default: '1g'
 class wazuh::indexer (
-  String  $indexer_network_host                    = '0.0.0.0',
-  String  $indexer_cluster_name                    = 'wazuh-cluster',
-  String  $indexer_node_name                       = 'node-1',
-  String  $indexer_node_max_local_storage_nodes    = '1',
-  String  $indexer_service                         = 'wazuh-indexer',
-  String  $indexer_package                         = 'wazuh-indexer',
-  String  $indexer_version                         = '4.9.2',
-  String  $indexer_fileuser                        = 'wazuh-indexer',
-  String  $indexer_filegroup                       = 'wazuh-indexer',
-  String  $indexer_path_data                       = '/var/lib/wazuh-indexer',
-  String  $indexer_path_logs                       = '/var/log/wazuh-indexer',
-  String  $indexer_path_certs                      = '/etc/wazuh-indexer/certs',
-  String  $indexer_security_init_lockfile          = '/var/tmp/indexer-security-init.lock',
-  Boolean $full_indexer_reinstall                  = false,
-  String  $indexer_ip                              = 'localhost',
-  String  $indexer_port                            = '9200',
-  Array[String] $indexer_discovery_hosts           = [],
-  Array[String] $indexer_cluster_initial_master_nodes = ['node-1'],
-  Array[String] $indexer_cluster_cn                = ['node-1'],
-  Pattern[/^\d+[kmgt]$/] $jvm_options_memory       = '1g',
+  # opensearch.yml configuration
+  $indexer_network_host = '0.0.0.0',
+  $indexer_cluster_name = 'wazuh-cluster',
+  $indexer_node_name = 'node-1',
+  $indexer_node_max_local_storage_nodes = '1',
+  $indexer_service = 'wazuh-indexer',
+  $indexer_package = 'wazuh-indexer',
+  $indexer_version = '4.11.2',
+  $indexer_fileuser = 'wazuh-indexer',
+  $indexer_filegroup = 'wazuh-indexer',
+
+  $indexer_path_data = '/var/lib/wazuh-indexer',
+  $indexer_path_logs = '/var/log/wazuh-indexer',
+  $indexer_path_certs = '/etc/wazuh-indexer/certs',
+  $indexer_security_init_lockfile = '/var/tmp/indexer-security-init.lock',
+  $full_indexer_reinstall = false, # Change to true when whant a full reinstall of Wazuh indexer
+
+  $indexer_ip = 'localhost',
+  $indexer_port = '9200',
+  $indexer_discovery_hosts = [], # Empty array for single-node configuration
+  $indexer_cluster_initial_master_nodes = ['node-1'],
+  $indexer_cluster_CN = ['node-1'],
+
+  # JVM options
+  $jvm_options_memory = '1g',
 ) {
   # assign version according to the package manager
   case $facts['os']['family'] {

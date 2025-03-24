@@ -1,25 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Wazuh Puppet v5.0.0
-
-### Added
-
-- Support to 5.0.0 Wazuh release.
-
-### Changed
-
-- None
-
-### Fixed
-
-- None
-
-### Deleted
-
-- None
-
-## Wazuh Puppet v4.10.2
+## [4.11.2]
 
 ### Added
 
@@ -37,7 +19,45 @@ All notable changes to this project will be documented in this file.
 
 - None
 
-## Wazuh Puppet v4.10.1
+## [4.11.1]
+
+### Added
+
+- None
+
+### Changed
+
+- None
+
+### Fixed
+
+- Add refreshonly option ([#1265](https://github.com/wazuh/wazuh-puppet/pull/1265))
+
+### Deleted
+
+- None
+
+## [4.11.0]
+
+### Added
+
+- None
+
+### Changed
+
+- None
+
+### Fixed
+
+- Add condition to execute apt update ([#1256](https://github.com/wazuh/wazuh-puppet/pull/1256))
+- Fix certificates.pp ([#1255](https://github.com/wazuh/wazuh-puppet/pull/1255))
+- Modify the version used into the Wazuh indexer and Wazuh manager deployment ([#1229](https://github.com/wazuh/wazuh-puppet/pull/1229))
+
+### Deleted
+
+- None
+
+## [4.10.1]
 
 ### Added
 
