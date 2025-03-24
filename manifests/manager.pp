@@ -276,7 +276,42 @@ class wazuh::manager (
   $wazuh_api_cors_source_route              = $wazuh::params_manager::wazuh_api_cors_source_route,
   $wazuh_api_cors_expose_headers            = $wazuh::params_manager::wazuh_api_cors_expose_headers,
 
-  $wazuh_api_cors_allow_credentials         = $wazuh::params_manager::wazuh_api_cors_allow_credentials,
+      $wazuh_api_host                           = $wazuh::params_manager::wazuh_api_host,
+
+      $wazuh_api_port                           = $wazuh::params_manager::wazuh_api_port,
+      $wazuh_api_file                           = $wazuh::params_manager::wazuh_api_file,
+
+      $wazuh_api_https_enabled                  = $wazuh::params_manager::wazuh_api_https_enabled,
+      $wazuh_api_https_key                      = $wazuh::params_manager::wazuh_api_https_key,
+
+      $wazuh_api_https_cert                     = $wazuh::params_manager::wazuh_api_https_cert,
+      $wazuh_api_https_use_ca                   = $wazuh::params_manager::wazuh_api_https_use_ca,
+      $wazuh_api_https_ca                       = $wazuh::params_manager::wazuh_api_https_ca,
+      $wazuh_api_logs_level                     = $wazuh::params_manager::wazuh_api_logs_level,
+      $wazuh_api_logs_format                    = $wazuh::params_manager::wazuh_api_logs_format,
+      $wazuh_api_ssl_ciphers                    = $wazuh::params_manager::wazuh_api_ssl_ciphers,
+      $wazuh_api_ssl_protocol                   = $wazuh::params_manager::wazuh_api_ssl_protocol,
+
+      $wazuh_api_cors_enabled                   = $wazuh::params_manager::wazuh_api_cors_enabled,
+      $wazuh_api_cors_source_route              = $wazuh::params_manager::wazuh_api_cors_source_route,
+      $wazuh_api_cors_expose_headers            = $wazuh::params_manager::wazuh_api_cors_expose_headers,
+
+
+      $wazuh_api_cors_allow_credentials         = $::wazuh::params_manager::wazuh_api_cors_allow_credentials,
+
+      $wazuh_api_access_max_login_attempts      = $::wazuh::params_manager::wazuh_api_access_max_login_attempts,
+      $wazuh_api_access_block_time              = $::wazuh::params_manager::wazuh_api_access_block_time,
+      $wazuh_api_access_max_request_per_minute  = $::wazuh::params_manager::wazuh_api_access_max_request_per_minute,
+      $wazuh_api_drop_privileges                = $::wazuh::params_manager::wazuh_api_drop_privileges,
+      $wazuh_api_experimental_features          = $::wazuh::params_manager::wazuh_api_experimental_features,
+
+      $remote_commands_localfile                = $::wazuh::params_manager::remote_commands_localfile,
+      $remote_commands_localfile_exceptions     = $::wazuh::params_manager::remote_commands_localfile_exceptions,
+      $remote_commands_wodle                    = $::wazuh::params_manager::remote_commands_wodle,
+      $remote_commands_wodle_exceptions         = $::wazuh::params_manager::remote_commands_wodle_exceptions,
+      $limits_eps                               = $::wazuh::params_manager::limits_eps,
+
+      $wazuh_api_template                       = $::wazuh::params_manager::wazuh_api_template,
 
   $wazuh_api_access_max_login_attempts      = $wazuh::params_manager::wazuh_api_access_max_login_attempts,
   $wazuh_api_access_block_time              = $wazuh::params_manager::wazuh_api_access_block_time,
