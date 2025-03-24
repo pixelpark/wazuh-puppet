@@ -103,7 +103,7 @@ class wazuh::indexer (
   $indexer_port = '9200',
   $indexer_discovery_hosts = [], # Empty array for single-node configuration
   $indexer_cluster_initial_master_nodes = ['node-1'],
-  $indexer_cluster_CN = ['node-1'],
+  $indexer_cluster_cn = ['node-1'],
 
   # JVM options
   $jvm_options_memory = '1g',
