@@ -19,7 +19,7 @@ on:
       wazuh_puppet_reference:
         description: "wazuh-puppet reference"
         type: string
-        default: "4.12.0"
+        default: "4.13.1"
         required: false
       id:
         description: "ID used to identify the workflow uniquely."
@@ -42,7 +42,7 @@ on:
       wazuh_puppet_reference:
         description: "wazuh-puppet reference"
         type: string
-        default: "4.12.0"
+        default: "4.13.1"
         required: false
       id:
         type: string
@@ -140,4 +140,3 @@ jobs:
           aws s3 cp ${{ github.workspace }}/output/${{ env.PUPPET_MODULE_NAME }}.sha512 s3://${{ vars.AWS_S3_BUCKET }}/${{ env.S3_PATH }}
           s3uri="s3://${{ vars.AWS_S3_BUCKET }}/${{ env.S3_PATH }}${{ env.PUPPET_MODULE_NAME }}.sha512"
           echo "S3 sha512 URI: ${s3uri}"
-

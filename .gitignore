@@ -7,6 +7,7 @@
 /.bundle/
 /.idea/
 /.vagrant/
+/.vscode
 /coverage/
 /bin/
 /doc/
@@ -17,6 +18,7 @@
 /pkg/
 /spec/fixtures/manifests/
 /spec/fixtures/modules/
+/.serena
 /tmp/
 /vendor/
 /convert_report.txt
