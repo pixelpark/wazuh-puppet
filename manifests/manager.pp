@@ -3,14 +3,12 @@
 class wazuh::manager (
 
   # Installation
-
   $server_package_version           = $wazuh::params_manager::server_package_version,
   $manage_firewall                  = $wazuh::params_manager::manage_firewall,
 
   ### Ossec.conf blocks
 
   ## Global
-
   $ossec_logall                     = $wazuh::params_manager::ossec_logall,
   $ossec_logall_json                = $wazuh::params_manager::ossec_logall_json,
   $ossec_emailnotification          = $wazuh::params_manager::ossec_emailnotification,
@@ -31,7 +29,6 @@ class wazuh::manager (
   $ossec_remote_queue_size          = $wazuh::params_manager::ossec_remote_queue_size,
 
   # ossec.conf generation parameters
-
   $configure_rootcheck                  = $wazuh::params_manager::configure_rootcheck,
   $configure_wodle_openscap             = $wazuh::params_manager::configure_wodle_openscap,
   $configure_wodle_cis_cat              = $wazuh::params_manager::configure_wodle_cis_cat,
@@ -79,7 +76,6 @@ class wazuh::manager (
   $ossec_active_response_repeated_offenders     =  $wazuh::params_manager::active_response_repeated_offenders,
 
   ## Rootcheck
-
   $ossec_rootcheck_disabled             = $wazuh::params_manager::ossec_rootcheck_disabled,
   $ossec_rootcheck_check_files          = $wazuh::params_manager::ossec_rootcheck_check_files,
   $ossec_rootcheck_check_trojans        = $wazuh::params_manager::ossec_rootcheck_check_trojans,
@@ -165,7 +161,7 @@ class wazuh::manager (
   $vulnerability_indexer_enabled            = $wazuh::params_manager::vulnerability_indexer_enabled,
   $vulnerability_indexer_hosts_host         = $wazuh::params_manager::vulnerability_indexer_hosts_host,
   $vulnerability_indexer_hosts_port         = $wazuh::params_manager::vulnerability_indexer_hosts_port,
-  # $vulnerability_indexer_username           = $wazuh::params_manager::vulnerability_indexer_username,
+  $vulnerability_indexer_username           = $wazuh::params_manager::vulnerability_indexer_username,
   $vulnerability_indexer_password           = $wazuh::params_manager::vulnerability_indexer_password,
   $vulnerability_indexer_ssl_ca             = $wazuh::params_manager::vulnerability_indexer_ssl_ca,
   $vulnerability_indexer_ssl_certificate    = $wazuh::params_manager::vulnerability_indexer_ssl_certificate,
@@ -220,7 +216,6 @@ class wazuh::manager (
   $ossec_syscheck_skip_nfs              = $wazuh::params_manager::ossec_syscheck_skip_nfs,
 
   # Cluster
-
   $ossec_cluster_name                   = $wazuh::params_manager::ossec_cluster_name,
   $ossec_cluster_node_name              = $wazuh::params_manager::ossec_cluster_node_name,
   $ossec_cluster_node_type              = $wazuh::params_manager::ossec_cluster_node_type,
@@ -255,15 +250,11 @@ class wazuh::manager (
   $ossec_local_files                    = $wazuh::params_manager::default_local_files,
 
   # API
-
   $wazuh_api_host                           = $wazuh::params_manager::wazuh_api_host,
-
   $wazuh_api_port                           = $wazuh::params_manager::wazuh_api_port,
   $wazuh_api_file                           = $wazuh::params_manager::wazuh_api_file,
-
   $wazuh_api_https_enabled                  = $wazuh::params_manager::wazuh_api_https_enabled,
   $wazuh_api_https_key                      = $wazuh::params_manager::wazuh_api_https_key,
-
   $wazuh_api_https_cert                     = $wazuh::params_manager::wazuh_api_https_cert,
   $wazuh_api_https_use_ca                   = $wazuh::params_manager::wazuh_api_https_use_ca,
   $wazuh_api_https_ca                       = $wazuh::params_manager::wazuh_api_https_ca,
@@ -271,11 +262,10 @@ class wazuh::manager (
   $wazuh_api_logs_format                    = $wazuh::params_manager::wazuh_api_logs_format,
   $wazuh_api_ssl_ciphers                    = $wazuh::params_manager::wazuh_api_ssl_ciphers,
   $wazuh_api_ssl_protocol                   = $wazuh::params_manager::wazuh_api_ssl_protocol,
-
   $wazuh_api_cors_enabled                   = $wazuh::params_manager::wazuh_api_cors_enabled,
   $wazuh_api_cors_source_route              = $wazuh::params_manager::wazuh_api_cors_source_route,
   $wazuh_api_cors_expose_headers            = $wazuh::params_manager::wazuh_api_cors_expose_headers,
-
+  $wazuh_api_cors_allow_credentials         = $wazuh::params_manager::wazuh_api_cors_allow_credentials,
   $wazuh_api_access_max_login_attempts      = $wazuh::params_manager::wazuh_api_access_max_login_attempts,
   $wazuh_api_access_block_time              = $wazuh::params_manager::wazuh_api_access_block_time,
   $wazuh_api_access_max_request_per_minute  = $wazuh::params_manager::wazuh_api_access_max_request_per_minute,
@@ -291,22 +281,15 @@ class wazuh::manager (
   $wazuh_api_template                       = $wazuh::params_manager::wazuh_api_template,
 
 ) inherits wazuh::params_manager {
-  validate_legacy(
-    Boolean, 'validate_bool', $syslog_output,$wazuh_manager_verify_manager_ssl
-  )
-  validate_legacy(
-    Array, 'validate_array', $decoder_exclude, $rule_exclude
-  )
-
   ## Determine which kernel and family puppet is running on. Will be used on _localfile, _rootcheck, _syscheck & _sca
-
   if ($facts['kernel'] == 'windows') {
     $kernel = 'Linux'
-  }else {
+  }
+  else {
     $kernel = 'Linux'
     if ($facts['os']['family'] == 'Debian') {
       $os_family = 'debian'
-    }else {
+    } else {
       $os_family = 'centos'
     }
   }
@@ -332,14 +315,10 @@ class wazuh::manager (
 
   # This allows arrays of integers, sadly
   # (commented due to stdlib version requirement)
-  validate_legacy(Boolean, 'validate_bool', $ossec_emailnotification)
   if ($ossec_emailnotification) {
     if $ossec_smtp_server == undef {
       fail('$ossec_emailnotification is enabled but $smtp_server was not set')
     }
-    validate_legacy(String, 'validate_string', $ossec_smtp_server)
-    validate_legacy(String, 'validate_string', $ossec_emailfrom)
-    validate_legacy(Array, 'validate_array', $ossec_emailto)
   }
 
   if $facts['os']['family'] == 'windows' {
@@ -396,25 +375,30 @@ class wazuh::manager (
       $apply_template_os = 'rhel'
       if ( $facts['os']['release']['full'] =~ /^9.*/ ) {
         $rhel_version = '9'
-      }elsif ( $facts['os']['release']['full'] =~ /^8.*/ ) {
+      }
+      elsif ( $facts['os']['release']['full'] =~ /^8.*/ ) {
         $rhel_version = '8'
-      }elsif ( $facts['os']['release']['full'] =~ /^7.*/ ) {
+      }
+      elsif ( $facts['os']['release']['full'] =~ /^7.*/ ) {
         $rhel_version = '7'
-      }elsif ( $facts['os']['release']['full'] =~ /^6.*/ ) {
+      }
+      elsif ( $facts['os']['release']['full'] =~ /^6.*/ ) {
         $rhel_version = '6'
-      }elsif ( $facts['os']['release']['full'] =~ /^5.*/ ) {
+      }
+      elsif ( $facts['os']['release']['full'] =~ /^5.*/ ) {
         $rhel_version = '5'
-      }else {
+      }
+      else {
         fail('This ossec module has not been tested on your distribution')
       }
-    }'Debian', 'debian', 'Ubuntu', 'ubuntu':{
+    } 'Debian', 'debian', 'Ubuntu', 'ubuntu':{
       $apply_template_os = 'debian'
       if ( $facts['os']['distro']['codename'] == 'wheezy') or ($facts['os']['distro']['codename'] == 'jessie') {
         $debian_additional_templates = 'yes'
       }
-    }'Amazon':{
+    } 'Amazon':{
       $apply_template_os = 'amazon'
-    }'CentOS','Centos','centos':{
+    } 'CentOS','Centos','centos':{
       $apply_template_os = 'centos'
     }
     default: { fail('This ossec module has not been tested on your distribution') }
@@ -587,21 +571,15 @@ class wazuh::manager (
       content => "</ossec_config>\n";
   }
 
-  # exec { 'Generate the wazuh-keystore (username)':
-  #   path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
-  #   command => "wazuh-keystore -f indexer -k username -v ${vulnerability_indexer_username}",
-  #   unless  => "test \"$(wazuh-keystore -f indexer -k username -s)\" = \"${vulnerability_indexer_username}\"",
-  #   require => Package[$wazuh::params_manager::server_package],
-  #   notify  => Service[$wazuh::params_manager::server_service],
-  # }
+  exec { 'Generate the wazuh-keystore (username)':
+    path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
+    command => "wazuh-keystore -f indexer -k username -v ${vulnerability_indexer_username}",
+  }
 
-  # exec { 'Generate the wazuh-keystore (password)':
-  #   path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
-  #   command => "wazuh-keystore -f indexer -k password -v ${vulnerability_indexer_password}",
-  #   unless  => "test \"$(wazuh-keystore -f indexer -k password -s)\" = \"${vulnerability_indexer_password}\"",
-  #   require => Package[$wazuh::params_manager::server_package],
-  #   notify  => Service[$wazuh::params_manager::server_service],
-  # }
+  exec { 'Generate the wazuh-keystore (password)':
+    path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
+    command => "wazuh-keystore -f indexer -k password -v ${vulnerability_indexer_password}",
+  }
 
   if ( $manage_client_keys == 'yes') {
     # TODO: ensure the authd service is started if manage_client_keys == authd
@@ -620,10 +598,6 @@ class wazuh::manager (
   # https://documentation.wazuh.com/current/user-manual/registering/use-registration-service.html#verify-manager-via-ssl
   if $wazuh_manager_verify_manager_ssl {
     if ($wazuh_manager_server_crt != undef) and ($wazuh_manager_server_key != undef) {
-      validate_legacy(
-        String, 'validate_string', $wazuh_manager_server_crt, $wazuh_manager_server_key
-      )
-
       file { '/var/ossec/etc/sslmanager.key':
         content => $wazuh_manager_server_key,
         owner   => 'root',
@@ -654,7 +628,8 @@ class wazuh::manager (
       state  => [
         'NEW',
         'RELATED',
-      'ESTABLISHED'],
+        'ESTABLISHED',
+      ],
     }
   }
   if $ossec_cluster_enable_firewall == 'yes' {
@@ -666,7 +641,8 @@ class wazuh::manager (
       state  => [
         'NEW',
         'RELATED',
-      'ESTABLISHED'],
+        'ESTABLISHED',
+      ],
     }
   }
 

@@ -1,7 +1,7 @@
 # Class: wazuh::certificates
 class wazuh::certificates (
   String                       $wazuh_repository        = 'packages.wazuh.com',
-  Optional[String]             $wazuh_version           = undef,
+  Optional[String]             $wazuh_version           = '4.14',
   Array[Array]                 $indexer_certs           = [],
   Array[Array]                 $manager_certs           = [],
   Array[Array]                 $manager_master_certs    = [],

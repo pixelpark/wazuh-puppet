@@ -1,14 +1,14 @@
 # Define: wazuh::cert_manager
 # Manages certificate creation and deployment for Wazuh components
 define wazuh::cert_manager (
-  String                         $component_name  = $title,
+  String                                  $component_name  = $title,
   Enum['indexer', 'dashboard', 'manager'] $component_type,
-  String                         $source_path     = '/tmp/wazuh-certificates',
-  Optional[String]               $target_path     = undef,
-  String                         $owner           = 'root',
-  String                         $group           = 'root',
-  String                         $cert_mode       = '0400',
-  Hash                          $cert_data        = {},
+  String                                  $source_path     = '/tmp/wazuh-certificates',
+  Optional[String]                        $target_path     = undef,
+  String                                  $owner           = 'root',
+  String                                  $group           = 'root',
+  String                                  $cert_mode       = '0400',
+  Hash                                    $cert_data        = {},
 ) {
   # Component configuration hash
   $component_configs = {
