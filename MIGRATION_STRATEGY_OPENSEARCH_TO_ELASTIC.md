@@ -702,18 +702,10 @@ Before proceeding, validate:
 
 ---
 
-## Document Changelog
-
-| Version | Date | Changes | Author |
-|---------|------|---------|--------|
-| 1.0 | 2025-10-30 | Initial document creation | Claude Code |
-
----
-
 ## Notes
 
 This document was created based on analysis of:
-- Current Wazuh Puppet module v4.13.1
+- Current Wazuh Puppet module v4.14.0
 - Official Wazuh documentation for Elastic Stack integration
 - Filebeat support lifecycle and compatibility
 - Infrastructure requirements for unified Elastic Stack
