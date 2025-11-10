@@ -9,7 +9,7 @@
 ## Executive Summary
 
 **Current Situation:**
-- Wazuh Puppet module uses OpenSearch forks (Wazuh Indexer, Wazuh Dashboard)
+- Wazuh Puppet module uses OpenSearch forks (Wazuh Indexer, Wazuh Dashboard)  
 - Filebeat 7.10.2 hardcoded in module (outdated but NOT EOL - confusion clarified below)
 - Your infrastructure already manages Elastic Stack via Puppet
 - Need unified data platform strategy

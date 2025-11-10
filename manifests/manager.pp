@@ -571,14 +571,31 @@ class wazuh::manager (
       content => "</ossec_config>\n";
   }
 
+  # Generate checksum of credentials for idempotency check
+  $keystore_checksum = sha256("${vulnerability_indexer_username}:${vulnerability_indexer_password}")
+  $keystore_checksum_file = '/var/ossec/.wazuh_keystore_checksum'
+
   exec { 'Generate the wazuh-keystore (username)':
     path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
     command => "wazuh-keystore -f indexer -k username -v ${vulnerability_indexer_username}",
+    unless  => "test -f ${keystore_checksum_file} && grep -q '^${keystore_checksum}$' ${keystore_checksum_file}",
+    require => Package[$wazuh::params_manager::server_package],
+    notify  => Exec['Update wazuh-keystore checksum'],
   }
 
   exec { 'Generate the wazuh-keystore (password)':
     path    => ['/var/ossec/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
     command => "wazuh-keystore -f indexer -k password -v ${vulnerability_indexer_password}",
+    unless  => "test -f ${keystore_checksum_file} && grep -q '^${keystore_checksum}$' ${keystore_checksum_file}",
+    require => Package[$wazuh::params_manager::server_package],
+    notify  => Exec['Update wazuh-keystore checksum'],
+  }
+
+  exec { 'Update wazuh-keystore checksum':
+    path        => ['/usr/bin', '/bin'],
+    command     => "echo '${keystore_checksum}' > ${keystore_checksum_file}",
+    refreshonly => true,
+    notify      => Service[$wazuh::params_manager::server_service],
   }
 
   if ( $manage_client_keys == 'yes') {
