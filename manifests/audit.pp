@@ -28,6 +28,23 @@ class wazuh::audit (
         require => Package[$audit_package_title],
       }
 
+      if $facts['os']['name'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '9') <= 0 {
+        package { 'audispd-plugins':
+          ensure  => 'present',
+          require => Package[$audit_package_title],
+        }
+        # Workaround - wazuh-agent / wazuh-manager use hardlinking on service startup
+        # which breaks on multi layer OS disk layouts. [Invalid cross-device link]
+        # Note source will created on first startup so first serice start will fail 😮‍💨
+        -> file { '/etc/audit/plugins.d/af_wazuh.conf':
+          ensure => file,
+          owner  => 'root',
+          group  => 'root',
+          mode   => '0640',
+          source => '/var/ossec/etc/af_wazuh.conf',
+        }
+      }
+
       if $audit_manage_rules == true {
         file { '/etc/audit/rules.d/audit.rules':
           ensure  => file,

@@ -295,22 +295,10 @@ class wazuh::manager (
   }
 
   if ( $ossec_syscheck_whodata_directories_1 == 'yes' ) or ( $ossec_syscheck_whodata_directories_2 == 'yes' ) {
-    case $facts['os']['name'] {
-      'Debian', 'debian', 'Ubuntu', 'ubuntu': {
-        package { 'Installing Auditd...':
-          name => 'auditd',
-        }
-      }
-      default: {
-        package { 'Installing Audit...':
-          name => 'audit',
-        }
-      }
+    class { 'wazuh::audit':
+      audit_manage_rules => false,
     }
-    service { 'auditd':
-      ensure => running,
-      enable => true,
-    }
+    ~> Service[$wazuh::params_manager::server_service]
   }
 
   # This allows arrays of integers, sadly

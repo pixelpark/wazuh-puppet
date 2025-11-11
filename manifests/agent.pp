@@ -243,6 +243,7 @@ class wazuh::agent (
       audit_buffer_bytes      => $audit_buffer_bytes,
       audit_rules             => $audit_rules,
     }
+    ~> Service[$agent_service_name]
   }
 
   if $manage_client_keys == 'yes' {
