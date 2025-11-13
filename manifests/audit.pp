@@ -29,7 +29,7 @@ class wazuh::audit (
         hasrestart => false,   # ensure that restart cmd is used
         restart    => '/bin/systemctl kill auditd.service; /bin/systemctl start auditd.service',
         require    => Package[$audit_package_title],
-        notify     => $service_notify,
+        notify     => Service[$service_notify],
       }
 
       if $facts['os']['name'] in ['CentOS','RedHat'] and versioncmp($facts['os']['release']['major'], '8') >= 0 {
@@ -42,8 +42,20 @@ class wazuh::audit (
       if $facts['os']['name'] in ['CentOS','RedHat'] and versioncmp($facts['os']['release']['major'], '9') >= 0 {
         # Workaround - wazuh-agent / wazuh-manager use hardlinking on service startup
         # which breaks on multi layer OS disk layouts. [Invalid cross-device link]
-        # Note source will created on first startup so first serice start will fail 😮‍💨
-        file { '/etc/audit/plugins.d/af_wazuh.conf':
+        # Note source will created on first startup so first service start will fail 😮‍💨
+        exec { "let ${service_notify} generate af_wazuh.conf":
+          command => [
+            '/bin/systemctl',
+            'start',
+            "${service_notify}.service",
+          ],
+          unless  => [[
+              '/bin/test',
+              '-f',
+              '/var/ossec/etc/af_wazuh.conf',
+          ]],
+        }
+        -> file { '/etc/audit/plugins.d/af_wazuh.conf':
           ensure  => file,
           owner   => 'root',
           group   => 'root',

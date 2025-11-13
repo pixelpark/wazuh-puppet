@@ -242,7 +242,7 @@ class wazuh::agent (
       audit_backlog_wait_time => $audit_backlog_wait_time,
       audit_buffer_bytes      => $audit_buffer_bytes,
       audit_rules             => $audit_rules,
-      service_notify          => Service[$agent_service_name],
+      service_notify          => $agent_service_name,
     }
   }
 

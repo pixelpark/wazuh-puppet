@@ -297,7 +297,7 @@ class wazuh::manager (
   if ( $ossec_syscheck_whodata_directories_1 == 'yes' ) or ( $ossec_syscheck_whodata_directories_2 == 'yes' ) {
     class { 'wazuh::audit':
       audit_manage_rules => false,
-      service_notify     => Service[$wazuh::params_manager::server_service],
+      service_notify     => $wazuh::params_manager::server_service,
     }
   }
 
