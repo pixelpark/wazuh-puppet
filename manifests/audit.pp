@@ -27,7 +27,7 @@ class wazuh::audit (
         ensure     => running,
         enable     => true,
         hasrestart => false,   # ensure that restart cmd is used
-        restart    => '/bin/systemctl kill auditd.service; /bin/systemctl start auditd.service',
+        restart    => '/sbin/auditctl --signal reload',
         require    => Package[$audit_package_title],
         notify     => Service[$service_notify],
       }
