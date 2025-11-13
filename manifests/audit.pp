@@ -28,14 +28,14 @@ class wazuh::audit (
         require => Package[$audit_package_title],
       }
 
-      if $facts['os']['name'] in ['CentOS','RedHat'] and versioncmp($facts['os']['release']['major'], '8') <= 0 {
+      if $facts['os']['name'] in ['CentOS','RedHat'] and versioncmp($facts['os']['release']['major'], '8') >= 0 {
         # Workaround - splited audit package for audit plugins
         package { 'audispd-plugins':
           ensure  => 'present',
           require => Package[$audit_package_title],
         }
       }
-      if $facts['os']['name'] in ['CentOS','RedHat'] and versioncmp($facts['os']['release']['major'], '9') <= 0 {
+      if $facts['os']['name'] in ['CentOS','RedHat'] and versioncmp($facts['os']['release']['major'], '9') >= 0 {
         # Workaround - wazuh-agent / wazuh-manager use hardlinking on service startup
         # which breaks on multi layer OS disk layouts. [Invalid cross-device link]
         # Note source will created on first startup so first serice start will fail 😮‍💨
