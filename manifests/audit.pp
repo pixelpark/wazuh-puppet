@@ -6,6 +6,7 @@ class wazuh::audit (
   $audit_backlog_wait_time = '0',
   $audit_rules = [],
   $audit_package_title = 'Installing Audit..',
+  $service_notify = undef,
 ) {
   case $facts['kernel'] {
     'Linux': {
@@ -23,9 +24,12 @@ class wazuh::audit (
       }
 
       service { 'auditd':
-        ensure  => running,
-        enable  => true,
-        require => Package[$audit_package_title],
+        ensure     => running,
+        enable     => true,
+        hasrestart => false,   # ensure that restart cmd is used
+        restart    => '/bin/systemctl kill auditd.service; /bin/systemctl start auditd.service',
+        require    => Package[$audit_package_title],
+        notify     => $service_notify,
       }
 
       if $facts['os']['name'] in ['CentOS','RedHat'] and versioncmp($facts['os']['release']['major'], '8') >= 0 {
@@ -46,6 +50,7 @@ class wazuh::audit (
           mode    => '0640',
           source  => '/var/ossec/etc/af_wazuh.conf',
           require => Package['audispd-plugins'],
+          notify  => Service['auditd'],
         }
       }
 

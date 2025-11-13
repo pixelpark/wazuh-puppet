@@ -242,8 +242,8 @@ class wazuh::agent (
       audit_backlog_wait_time => $audit_backlog_wait_time,
       audit_buffer_bytes      => $audit_buffer_bytes,
       audit_rules             => $audit_rules,
+      service_notify          => Service[$agent_service_name],
     }
-    ~> Service[$agent_service_name]
   }
 
   if $manage_client_keys == 'yes' {
