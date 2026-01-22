@@ -11,9 +11,9 @@ class wazuh::filebeat_oss (
   $filebeat_oss_elastic_user = 'admin',
   $filebeat_oss_elastic_password = 'admin',
   $filebeat_oss_version = '7.10.2',
-  $wazuh_app_version = '4.14.0_7.10.2',
-  $wazuh_extensions_version = 'v4.14.0',
-  $wazuh_filebeat_module = 'wazuh-filebeat-0.4.tar.gz',
+  $wazuh_app_version = '4.14.2_7.10.2',
+  $wazuh_extensions_version = 'v4.14.2',
+  $wazuh_filebeat_module = 'wazuh-filebeat-0.5.tar.gz',
   $wazuh_node_name = 'master',
 
   $filebeat_fileuser = 'root',
@@ -81,9 +81,10 @@ class wazuh::filebeat_oss (
   }
 
   service { 'filebeat':
-    ensure  => running,
-    enable  => true,
-    name    => $filebeat_oss_service,
-    require => Package['filebeat'],
+    ensure   => running,
+    enable   => true,
+    name     => $filebeat_oss_service,
+    require  => Package['filebeat'],
+    provider => 'systemd',
   }
 }

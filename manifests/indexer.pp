@@ -10,7 +10,7 @@ class wazuh::indexer (
   $indexer_node_max_local_storage_nodes = '1',
   $indexer_service = 'wazuh-indexer',
   $indexer_package = 'wazuh-indexer',
-  $indexer_version = '4.14.0',
+  $indexer_version = '4.14.2',
   $indexer_fileuser = 'wazuh-indexer',
   $indexer_filegroup = 'wazuh-indexer',
 
@@ -99,6 +99,7 @@ class wazuh::indexer (
       Wazuh::Cert_manager[$indexer_node_name],
       File['configuration file'],
     ],
+    provider  => 'systemd',
   }
 
   file_line { "Insert line limits nofile for ${indexer_fileuser}":

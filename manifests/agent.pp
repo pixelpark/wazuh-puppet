@@ -322,6 +322,17 @@ class wazuh::agent (
           $apply_template_os = 'centos'
         } 'SLES':{
           $apply_template_os = 'suse'
+        } 'Rocky':{
+          $apply_template_os = 'rhel'
+          if ( $facts['os']['release']['full'] =~ /^10.*/ ) {
+            $rhel_version = '10'
+          }
+          elsif ( $facts['os']['release']['full'] =~ /^9.*/ ) {
+            $rhel_version = '9'
+          }
+          elsif ( $facts['os']['release']['full'] =~ /^8.*/ ) {
+            $rhel_version = '8'
+          }
         }
         default: { fail('OS not supported') }
       }
@@ -576,7 +587,7 @@ class wazuh::agent (
         exec { 'agent-auth-windows':
           command  => $agent_auth_command,
           provider => 'powershell',
-          onlyif   => "if ((Get-Item '${$::wazuh::params_agent::keys_file}').length -gt 0kb) {exit 1}",
+          onlyif   => "if ((Get-Item '${$wazuh::params_agent::keys_file}').length -gt 0kb) {exit 1}",
           require  => Concat['agent_ossec.conf'],
           before   => Service[$agent_service_name],
           notify   => Service[$agent_service_name],
