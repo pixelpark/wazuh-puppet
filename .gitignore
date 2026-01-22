@@ -42,3 +42,9 @@ kitchen/.pytest_cache/
 kitchen/.*
 kitchen/modules/
 output/
+
+# Local planning/documentation files (not for upstream sync)
+ACTION_PLAN_WAZUH_DEPLOYMENT.md
+WAZUH_CAPACITY_PLANNING_500_AGENTS.md
+WAZUH_HIERA_CONFIGURATION.md
+elastic/
