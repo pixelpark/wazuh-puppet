@@ -382,6 +382,19 @@ class wazuh::params_agent {
                   },
                 }
               }
+              if ( $facts['os']['release']['full'] =~ /^8.*/ ) {
+                $ossec_service_provider = 'systemd'
+
+                $wodle_openscap_content = {
+                  'ssg-centos-8-ds.xml' => {
+                    'type'   => 'xccdf',
+                    profiles => [
+                      'xccdf_org.ssgproject.content_profile_pci-dss',
+                      'xccdf_org.ssgproject.content_profile_common',
+                    ],
+                  },
+                }
+              }
             }
             /^(RedHat|OracleLinux)$/: {
               if ( $facts['os']['release']['full'] =~ /^6.*/ ) {
