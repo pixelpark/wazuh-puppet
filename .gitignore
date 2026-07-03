@@ -71,3 +71,9 @@ docs/agents/
 tools/.env.example
 tools/audit_triggered_rules.py
 .claude/rules/
+alarm-catalogue-infra-review_20260702.csv
+CONTEXT.md
+enabled-rules.csv
+me_csa_wazuh_rukes_20260702_kk.xlsx
+SPK Wazuh Alarm Catalogue_5606cef439cc4d46966787065119db37-020726-0935-232.pdf
+docs/adr/0001-alert-thresholds-level-8.md
