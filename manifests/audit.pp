@@ -23,11 +23,17 @@ class wazuh::audit (
         }
       }
 
+      if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '8') < 0 {
+        $audit_reload_command = '/sbin/service auditd reload'
+      } else {
+        $audit_reload_command = '/sbin/auditctl --signal reload'
+      }
+
       service { 'auditd':
         ensure     => running,
         enable     => true,
         hasrestart => false,   # ensure that restart cmd is used
-        restart    => '/sbin/auditctl --signal reload',
+        restart    => $audit_reload_command,
         require    => Package[$audit_package_title],
         notify     => Service[$service_notify],
       }
@@ -38,6 +44,13 @@ class wazuh::audit (
           ensure  => 'present',
           require => Package[$audit_package_title],
         }
+      }
+
+      exec { 'Restore Wazuh whodata audit rules':
+        command => $audit_reload_command,
+        unless  => '/sbin/auditctl -l | /bin/grep -F -q wazuh_fim',
+        require => Service['auditd'],
+        notify  => Service[$service_notify],
       }
 
       if $audit_manage_rules == true {

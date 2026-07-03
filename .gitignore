@@ -48,3 +48,26 @@ ACTION_PLAN_WAZUH_DEPLOYMENT.md
 WAZUH_CAPACITY_PLANNING_500_AGENTS.md
 WAZUH_HIERA_CONFIGURATION.md
 elastic/
+wazuh/
+
+# Local agent guides (Claude Code / Codex) — not for upstream sync
+AGENTS.md
+CLAUDE.md
+manifests/AGENTS.md
+manifests/CLAUDE.md
+templates/AGENTS.md
+templates/CLAUDE.md
+spec/AGENTS.md
+spec/CLAUDE.md
+kitchen/AGENTS.md
+kitchen/CLAUDE.md
+tools/AGENTS.md
+tools/CLAUDE.md
+.claude/settings.json
+
+# Local agent skill collateral (Matt Pocock skills) — not for upstream sync
+docs/agents/
+.scratch/
+tools/.env.example
+tools/audit_triggered_rules.py
+.claude/rules/

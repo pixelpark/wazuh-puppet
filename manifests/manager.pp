@@ -662,14 +662,6 @@ class wazuh::manager (
     }
   }
 
-  if ( $ossec_syscheck_whodata_directories_1 == 'yes' ) or ( $ossec_syscheck_whodata_directories_2 == 'yes' ) {
-    exec { 'Ensure wazuh-fim rule is added to auditctl':
-      command => '/sbin/auditctl -l',
-      unless  => '/sbin/auditctl -l | grep wazuh_fim',
-      tries   => 2,
-    }
-  }
-
   file { '/var/ossec/api/configuration/api.yaml':
     owner   => 'root',
     group   => 'wazuh',
