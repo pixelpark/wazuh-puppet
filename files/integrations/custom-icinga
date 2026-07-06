@@ -1,0 +1,117 @@
+#!/var/ossec/framework/python/bin/python3
+# Wazuh -> Icinga2 integration (Wazuh alarm routing 24x7, SPKSUP-6798 / ADR 0002).
+#
+# Invoked by wazuh-integratord for alerts matching the custom-icinga
+# <integration> block (the 9 "24x7" rule IDs). Submits a passive check result
+# (CRITICAL) to the Icinga2 API so on-call is paged.
+#
+# argv (Wazuh 4.x integratord convention, matching the official integrations):
+#   1: path to the file holding the triggering alert (JSON, alert_format json)
+#   2: <api_key>  -- Icinga2 API user credentials as "user:password"
+#   3: <hook_url> -- Icinga2 API base URL, e.g. https://icinga.example.com:5665
+#   4+: optional 'debug' flag and/or the <options> JSON file (integratord
+#       passes a temp path ending in 'options'). 'dry-run' builds the payload
+#       and logs it without calling Icinga (for smoke tests).
+#
+# <options> JSON keys:
+#   host        (required) Icinga host object receiving the passive result
+#   service     (required) Icinga service object name on that host
+#   exit_status check state to submit, 2 = CRITICAL      (default 2)
+#   verify_tls  verify TLS; false for self-signed setups (default true)
+#   ca_cert     path to the Icinga CA bundle, overrides verify_tls
+#   timeout     HTTP timeout in seconds                  (default 15)
+
+import json
+import sys
+from datetime import datetime, timezone
+
+import requests
+
+LOG_FILE = '/var/ossec/logs/integrations.log'
+
+DEBUG = False
+DRY_RUN = False
+
+
+def log(message):
+    line = '{} custom-icinga: {}'.format(datetime.now(timezone.utc).isoformat(), message)
+    try:
+        with open(LOG_FILE, 'a') as handle:
+            handle.write(line + '\n')
+    except OSError:
+        pass
+    if DEBUG:
+        print(line)
+
+
+def parse_args(argv):
+    if len(argv) < 4:
+        raise SystemExit('usage: custom-icinga <alert_file> <api_key> <hook_url> [debug] [options_file]')
+    alert_file, api_key, hook_url = argv[1], argv[2], argv[3]
+    options = {}
+    for arg in argv[4:]:
+        if arg.endswith('options'):
+            try:
+                with open(arg) as handle:
+                    options = json.load(handle)
+            except (OSError, ValueError) as err:
+                log('WARNING could not read options file {}: {}'.format(arg, err))
+    return alert_file, api_key, hook_url.rstrip('/'), options
+
+
+def main(argv):
+    global DEBUG, DRY_RUN
+    DEBUG = 'debug' in argv[4:]
+    DRY_RUN = 'dry-run' in argv[4:]
+
+    alert_file, api_key, hook_url, options = parse_args(argv)
+    missing = [key for key in ('host', 'service') if key not in options]
+    if missing:
+        log('ERROR <options> must define {}'.format(', '.join(missing)))
+        return 1
+    if ':' not in api_key:
+        log('ERROR <api_key> must be "user:password" for the Icinga2 API')
+        return 1
+
+    with open(alert_file) as handle:
+        alert = json.load(handle)
+    rule = alert.get('rule', {})
+    agent = alert.get('agent', {})
+
+    payload = {
+        'type': 'Service',
+        'filter': 'host.name=="{}" && service.name=="{}"'.format(options['host'], options['service']),
+        'exit_status': int(options.get('exit_status', 2)),
+        'plugin_output': 'Wazuh alarm rule {} (level {}): {} on {} ({}) at {}'.format(
+            rule.get('id', '?'), rule.get('level', '?'), rule.get('description', 'no description'),
+            agent.get('name', 'unknown agent'), agent.get('ip', '?'), alert.get('timestamp', '?'),
+        ),
+        'check_source': 'wazuh-integratord',
+    }
+
+    if DRY_RUN:
+        log('dry-run payload: {}'.format(json.dumps(payload)))
+        return 0
+
+    verify = options.get('ca_cert', bool(options.get('verify_tls', True)))
+    user, password = api_key.split(':', 1)
+    try:
+        response = requests.post(
+            '{}/v1/actions/process-check-result'.format(hook_url),
+            json=payload,
+            auth=(user, password),
+            headers={'Accept': 'application/json'},
+            verify=verify,
+            timeout=int(options.get('timeout', 15)),
+        )
+        response.raise_for_status()
+        log('submitted CRITICAL for rule {} agent {} -> {}!{}'.format(
+            rule.get('id', '?'), agent.get('id', '?'), options['host'], options['service']))
+        return 0
+    except requests.exceptions.RequestException as err:
+        log('ERROR Icinga2 request failed for rule {}: {}'.format(rule.get('id', '?'), err))
+        return 1
+
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))

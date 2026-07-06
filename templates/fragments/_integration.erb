@@ -6,8 +6,8 @@
     <% if @api_key != '' -%>
       <api_key><%= @api_key %></api_key>
     <% end %>
-    <% if @in_rule_id != '' -%>
-      <rule_id><%= @in_rule_id %></rule_id>
+    <% if @_in_rule_id != '' -%>
+      <rule_id><%= @_in_rule_id %></rule_id>
     <% end %>
     <% if @in_level != '' -%>
       <level><%= @in_level %></level>
@@ -20,6 +20,10 @@
     <% end %>
     <% if @in_format != '' -%>
     <alert_format><%= @in_format %></alert_format>
+    <% end %>
+    <% require 'json' if @in_options.is_a?(Hash) -%>
+    <% if @in_options != '' && @in_options != {} -%>
+    <options><%= @in_options.is_a?(Hash) ? @in_options.to_json : @in_options %></options>
     <% end %>
     <% if @in_max_log != '' -%>
       <max_log><%= @in_max_log %></max_log>
