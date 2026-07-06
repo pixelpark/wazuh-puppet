@@ -4,3 +4,6 @@ fixtures:
     stdlib:
       repo: "puppetlabs/stdlib"
       ref: "4.13.0"
+    concat:
+      repo: "puppetlabs/concat"
+      ref: "7.4.0"
