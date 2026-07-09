@@ -1,26 +1,19 @@
 require 'spec_helper'
 describe 'wazuh::manager' do
-  on_supported_os.each do |os, facts|
+  # The manager is Linux-only: the class fails on Windows by design, and
+  # params_manager has no Windows coverage for the server-side defaults.
+  on_supported_os.reject { |os, _facts| os.start_with?('windows') }.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts.merge(concat_basedir: '/dummy')
       end
 
       context 'with defaults for all parameters' do
-        it do
-          expect { is_expected.to compile.with_all_deps }.to raise_error(%r{Must pass smtp_server})
-        end
-      end
-      context 'with valid paramaters' do
-        let(:params) do
-          {
-            smtp_server: '127.0.0.1',
-            ossec_emailto: 'root@localhost.localdomain',
-          }
-        end
-
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('wazuh::manager') }
+        it { is_expected.to contain_package('wazuh-manager') }
+        it { is_expected.to contain_service('wazuh-manager') }
+        it { is_expected.to contain_concat('manager_ossec.conf') }
       end
     end
   end

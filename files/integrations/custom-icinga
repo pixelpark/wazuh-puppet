@@ -48,6 +48,7 @@ def parse_args(argv):
     if len(argv) < 4:
         raise SystemExit('usage: custom-icinga <alert_file> <api_key> <hook_url> [debug] [options_file]')
     alert_file, api_key, hook_url = argv[1], argv[2], argv[3]
+    api_key = api_key.strip().strip('"\'')
     options = {}
     for arg in argv[4:]:
         if arg.endswith('options'):

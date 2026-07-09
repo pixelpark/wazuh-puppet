@@ -7,3 +7,6 @@ fixtures:
     concat:
       repo: "puppetlabs/concat"
       ref: "7.4.0"
+    powershell:
+      repo: "puppetlabs/powershell"
+      ref: "5.2.0"
