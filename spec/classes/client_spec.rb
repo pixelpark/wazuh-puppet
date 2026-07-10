@@ -7,35 +7,34 @@ describe 'wazuh::agent' do
       end
 
       context 'with defaults for all parameters' do
-        it do
-          expect { is_expected.to compile.with_all_deps }.to raise_error(%r{must pass either})
+        it 'requires a register endpoint while client key management is enabled' do
+          is_expected.to compile.and_raise_error(%r{wazuh_register_endpoint parameter is needed})
         end
       end
 
-      context 'with ossec_ip' do
+      context 'with a register endpoint' do
         let(:params) do
           {
-            ossec_ip: '127.0.0.1',
+            wazuh_register_endpoint: 'wazuh.example.com',
           }
         end
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('wazuh::agent') }
-        it { is_expected.not_to contain_Concat__Fragment('ossec.conf_10').with_content(%r{/<server-hostname>local.test<\/server-hostname>/}) }
-        it { is_expected.to contain_Concat__Fragment('ossec.conf_10').with_content(%r{/<server-ip>127.0.0.1<\/server-ip>/}) }
+        it { is_expected.to contain_concat('agent_ossec.conf') }
+        it { is_expected.not_to contain_concat__fragment('ossec.conf_agent').with_content(%r{<address>}) }
       end
 
-      context 'with ossec_server_hostname' do
+      context 'with a register and reporting endpoint' do
         let(:params) do
           {
-            ossec_server_hostname: 'local.test',
+            wazuh_register_endpoint: 'wazuh.example.com',
+            wazuh_reporting_endpoint: 'wazuh.example.com',
           }
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_class('wazuh::wazuh-agent') }
-        it { is_expected.not_to contain_Concat__Fragment('ossec.conf_10').with_content(%r{/<server-ip>127.0.0.1<\/server-ip>/}) }
-        it { is_expected.to contain_Concat__Fragment('ossec.conf_10').with_content(%r{/<server-hostname>local.test<\/server-hostname>/}) }
+        it { is_expected.to contain_concat__fragment('ossec.conf_agent').with_content(%r{<address>wazuh\.example\.com</address>}) }
       end
     end
   end

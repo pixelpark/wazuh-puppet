@@ -1,28 +1,35 @@
+<% require 'cgi' -%>
+<% require 'json' if @in_options.is_a?(Hash) -%>
+<% xml_escape = ->(value) { CGI.escapeHTML(value.to_s) } -%>
+<% serialized_options = @in_options.is_a?(Hash) ? @in_options.to_json : @in_options -%>
   <integration>
-    <name><%= @name %></name>
+    <name><%= xml_escape.call(@name) %></name>
     <% if @hook_url != '' -%>
-      <hook_url><%= @hook_url %></hook_url>
+      <hook_url><%= xml_escape.call(@hook_url) %></hook_url>
     <% end %>
     <% if @api_key != '' -%>
-      <api_key><%= @api_key %></api_key>
+      <api_key><%= xml_escape.call(@api_key) %></api_key>
     <% end %>
-    <% if @in_rule_id != '' -%>
-      <rule_id><%= @in_rule_id %></rule_id>
+    <% if @_in_rule_id != '' -%>
+      <rule_id><%= xml_escape.call(@_in_rule_id) %></rule_id>
     <% end %>
     <% if @in_level != '' -%>
-      <level><%= @in_level %></level>
+      <level><%= xml_escape.call(@in_level) %></level>
     <% end %>
     <% if @in_group != '' -%>
-      <group><%= @in_group %></group>
-    <% end %>  
+      <group><%= xml_escape.call(@in_group) %></group>
+    <% end %>
     <% if @in_location != '' -%>
-      <event_location><%= @in_location %></event_location>
+      <event_location><%= xml_escape.call(@in_location) %></event_location>
     <% end %>
     <% if @in_format != '' -%>
-    <alert_format><%= @in_format %></alert_format>
+    <alert_format><%= xml_escape.call(@in_format) %></alert_format>
+    <% end %>
+    <% if @in_options != '' && @in_options != {} -%>
+    <options><%= xml_escape.call(serialized_options) %></options>
     <% end %>
     <% if @in_max_log != '' -%>
-      <max_log><%= @in_max_log %></max_log>
+      <max_log><%= xml_escape.call(@in_max_log) %></max_log>
     <% end %>
   </integration>
 

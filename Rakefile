@@ -30,6 +30,24 @@ end
 
 PuppetLint.configuration.send('disable_relative')
 
+# puppet-lint 4.x (the newest puppetlabs_spec_helper 8.0.0 allows) crashes under
+# Ruby >= 3.4: PuppetLint::Data.tokens parses `caller` with the pre-3.4 backtrace
+# format ("`method'" became "'method'"). Shim the getter until the toolchain
+# allows puppet-lint >= 5, where this is fixed.
+if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.4.0') &&
+   Gem::Version.new(PuppetLint::VERSION) < Gem::Version.new('5.0.0')
+  PuppetLint::Data.singleton_class.class_eval do
+    def tokens
+      called_by_check = caller(1..2).to_a.any? { |frame| frame.match?(%r{[`'](?:[^`']*[#.])?check'}) }
+      called_by_check ? @tokens.dup : @tokens
+    end
+  end
+end
+
+# Local-only Pixelpark deployment collateral (gitignored) — profiles, not module source
+PuppetLint.configuration.ignore_paths << 'elastic/**/*.pp'
+PuppetLint.configuration.ignore_paths << 'wazuh/**/*.pp'
+
 if Bundler.rubygems.find_name('github_changelog_generator').any?
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|
     raise "Set CHANGELOG_GITHUB_TOKEN environment variable eg 'export CHANGELOG_GITHUB_TOKEN=valid_token_here'" if Rake.application.top_level_tasks.include? "changelog" and ENV['CHANGELOG_GITHUB_TOKEN'].nil?
