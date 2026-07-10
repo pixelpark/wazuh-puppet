@@ -544,6 +544,7 @@ class wazuh::params_agent {
       $config_file = 'C:\\Program Files (x86)\\ossec-agent\\ossec.conf'
       $shared_agent_config_file = 'C:\\Program Files (x86)\\ossec-agent\\shared\\agent.conf'
       $config_group = 'Administrators'
+      $config_owner = 'Administrator'
       $download_path = 'C:\\Temp'
       $config_mode = '0664'
 
@@ -555,6 +556,9 @@ class wazuh::params_agent {
       $ossec_service_provider = undef
 
       # Wodles
+
+      ## docker-listener
+      $wodle_docker_listener_disabled = 'yes'
 
       ## syscollector
       $wodle_syscollector_disabled = 'no'

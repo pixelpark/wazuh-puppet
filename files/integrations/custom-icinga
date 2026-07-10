@@ -66,6 +66,9 @@ def main(argv):
     DRY_RUN = 'dry-run' in argv[4:]
 
     alert_file, api_key, hook_url, options = parse_args(argv)
+    if not hook_url.lower().startswith('https://'):
+        log('ERROR <hook_url> must use HTTPS')
+        return 1
     missing = [key for key in ('host', 'service') if key not in options]
     if missing:
         log('ERROR <options> must define {}'.format(', '.join(missing)))
@@ -94,7 +97,7 @@ def main(argv):
         log('dry-run payload: {}'.format(json.dumps(payload)))
         return 0
 
-    verify = options.get('ca_cert', bool(options.get('verify_tls', True)))
+    verify = options.get('ca_cert', options.get('verify_tls', True))
     user, password = api_key.split(':', 1)
     try:
         response = requests.post(

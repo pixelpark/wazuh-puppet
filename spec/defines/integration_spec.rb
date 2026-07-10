@@ -17,12 +17,12 @@ describe 'wazuh::integration' do
         let(:title) { 'custom-jira' }
         let(:params) do
           {
-            hook_url: 'https://jira.example.com/rest/api/2/issue',
-            api_key: 'secret-token',
+            hook_url: 'https://jira.example.com',
+            api_key: 'user:p&<secret',
             in_rule_id: %w[100001 100002 100003],
             in_level: '',
             in_format: 'json',
-            in_options: { 'project' => 'SPKSUP' },
+            in_options: { 'project' => 'SPKSUP & <Ops>' },
             script_source: 'puppet:///modules/wazuh/integrations/custom-jira',
           }
         end
@@ -32,11 +32,11 @@ describe 'wazuh::integration' do
           is_expected.to contain_concat__fragment('custom-jira')
             .with_target('manager_ossec.conf')
             .with_content(%r{<name>custom-jira</name>})
-            .with_content(%r{<hook_url>https://jira\.example\.com/rest/api/2/issue</hook_url>})
-            .with_content(%r{<api_key>secret-token</api_key>})
+            .with_content(%r{<hook_url>https://jira\.example\.com</hook_url>})
+            .with_content(%r{<api_key>user:p&amp;&lt;secret</api_key>})
             .with_content(%r{<rule_id>100001,100002,100003</rule_id>})
             .with_content(%r{<alert_format>json</alert_format>})
-            .with_content(%r{<options>\{"project":"SPKSUP"\}</options>})
+            .with_content(%r{<options>\{&quot;project&quot;:&quot;SPKSUP &amp; &lt;Ops&gt;&quot;\}</options>})
         }
         it 'renders no level filter so rule_id is the only criterion' do
           is_expected.to contain_concat__fragment('custom-jira').without_content(%r{<level>})
@@ -65,7 +65,7 @@ describe 'wazuh::integration' do
         it {
           is_expected.to contain_concat__fragment('custom-legacy')
             .with_content(%r{<rule_id>1002,1003</rule_id>})
-            .with_content(%r{<options>\{"raw": "json string"\}</options>})
+            .with_content(%r{<options>\{&quot;raw&quot;: &quot;json string&quot;\}</options>})
         }
       end
 

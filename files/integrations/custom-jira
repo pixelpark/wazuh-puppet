@@ -20,6 +20,7 @@
 #   labels      extra labels, list of strings          (default [])
 #   dedup       search for an open issue before create (default true)
 #   verify_tls  verify the Jira TLS certificate        (default true)
+#   ca_cert     path to the Jira CA bundle, overrides verify_tls
 #   timeout     HTTP timeout in seconds                (default 30)
 
 import json
@@ -66,7 +67,7 @@ def parse_args(argv):
 def auth_kwargs(api_key, options):
     kwargs = {
         'timeout': int(options.get('timeout', 30)),
-        'verify': bool(options.get('verify_tls', True)),
+        'verify': options.get('ca_cert', options.get('verify_tls', True)),
         'headers': {'Content-Type': 'application/json'},
     }
     if ':' in api_key:
@@ -129,6 +130,9 @@ def main(argv):
     DRY_RUN = 'dry-run' in argv[4:]
 
     alert_file, api_key, hook_url, options = parse_args(argv)
+    if not hook_url.lower().startswith('https://'):
+        log('ERROR <hook_url> must use HTTPS')
+        return 1
     if 'project' not in options:
         log('ERROR <options> must define "project"')
         return 1
