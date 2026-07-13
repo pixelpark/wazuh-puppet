@@ -1,36 +1,63 @@
-<% require 'cgi' -%>
-<% require 'json' if @in_options.is_a?(Hash) -%>
-<% xml_escape = ->(value) { CGI.escapeHTML(value.to_s) } -%>
-<% serialized_options = @in_options.is_a?(Hash) ? @in_options.to_json : @in_options -%>
+<% require 'json' -%>
+<%
+  # Wazuh's os_xml parser copies element content verbatim and decodes no XML
+  # entities, so values must be emitted raw — never CGI/XML-escaped. A literal
+  # '<' cannot be represented at all: fail the catalog instead of corrupting
+  # ossec.conf. Values are never echoed into errors (they may be secrets).
+  xml_text = lambda do |field, value|
+    text = value.to_s
+    if text.include?('<')
+      raise ArgumentError, "wazuh::integration '#{@name}': <#{field}> value contains a literal '<', which cannot be represented in ossec.conf"
+    end
+    if text[/\\*\z/].length.odd?
+      raise ArgumentError, "wazuh::integration '#{@name}': <#{field}> value ends in an odd number of backslashes, which os_xml would parse as escaping the closing tag"
+    end
+    text
+  end
+  # <options> carries JSON for the integration script. Keep it valid JSON but
+  # free of &, <, > by encoding them as JSON \uXXXX escapes (in valid JSON
+  # those characters only occur inside strings, so the substitution is safe).
+  json_options = lambda do |options|
+    json = options.is_a?(Hash) ? options.to_json : options.to_s
+    begin
+      parsed = JSON.parse(json)
+    rescue JSON::ParserError
+      raise ArgumentError, "wazuh::integration '#{@name}': <options> value is not valid JSON"
+    end
+    unless parsed.is_a?(Hash)
+      raise ArgumentError, "wazuh::integration '#{@name}': <options> value must be a JSON object"
+    end
+    json.gsub(/[&<>]/) { |char| format('\u%04x', char.ord) }
+  end
+-%>
   <integration>
-    <name><%= xml_escape.call(@name) %></name>
+    <name><%= xml_text.call('name', @name) %></name>
     <% if @hook_url != '' -%>
-      <hook_url><%= xml_escape.call(@hook_url) %></hook_url>
+      <hook_url><%= xml_text.call('hook_url', @hook_url) %></hook_url>
     <% end %>
     <% if @api_key != '' -%>
-      <api_key><%= xml_escape.call(@api_key) %></api_key>
+      <api_key><%= xml_text.call('api_key', @api_key) %></api_key>
     <% end %>
     <% if @_in_rule_id != '' -%>
-      <rule_id><%= xml_escape.call(@_in_rule_id) %></rule_id>
+      <rule_id><%= xml_text.call('rule_id', @_in_rule_id) %></rule_id>
     <% end %>
     <% if @in_level != '' -%>
-      <level><%= xml_escape.call(@in_level) %></level>
+      <level><%= xml_text.call('level', @in_level) %></level>
     <% end %>
     <% if @in_group != '' -%>
-      <group><%= xml_escape.call(@in_group) %></group>
+      <group><%= xml_text.call('group', @in_group) %></group>
     <% end %>
     <% if @in_location != '' -%>
-      <event_location><%= xml_escape.call(@in_location) %></event_location>
+      <event_location><%= xml_text.call('event_location', @in_location) %></event_location>
     <% end %>
     <% if @in_format != '' -%>
-    <alert_format><%= xml_escape.call(@in_format) %></alert_format>
+    <alert_format><%= xml_text.call('alert_format', @in_format) %></alert_format>
     <% end %>
-    <% if @in_options != '' && @in_options != {} -%>
-    <options><%= xml_escape.call(serialized_options) %></options>
+    <% if @in_options && @in_options != '' && @in_options != {} -%>
+    <options><%= json_options.call(@in_options) %></options>
     <% end %>
     <% if @in_max_log != '' -%>
-      <max_log><%= xml_escape.call(@in_max_log) %></max_log>
+      <max_log><%= xml_text.call('max_log', @in_max_log) %></max_log>
     <% end %>
   </integration>
 
-  
