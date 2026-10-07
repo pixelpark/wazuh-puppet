@@ -1,5 +1,4 @@
 #!/var/ossec/framework/python/bin/python3
-# Wazuh -> Icinga2 integration (Wazuh alarm routing 24x7, SPKSUP-6798 / ADR 0002).
 #
 # Invoked by wazuh-integratord for alerts matching the custom-icinga
 # <integration> block (the 9 "24x7" rule IDs). Submits a passive check result

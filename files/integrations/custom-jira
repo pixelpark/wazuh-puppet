@@ -1,5 +1,4 @@
 #!/var/ossec/framework/python/bin/python3
-# Wazuh -> Jira integration (Wazuh alarm routing, SPKSUP-6798 / ADR 0002).
 #
 # Invoked by wazuh-integratord for alerts matching the custom-jira
 # <integration> block (rule-ID allowlist). Creates a Jira issue for the alert
